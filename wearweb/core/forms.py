@@ -10,3 +10,7 @@ class usersignupform(UserCreationForm):
             'password1':forms.PasswordInput,
             'password2':forms.PasswordInput,
         }
+
+class userloginform(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput())
