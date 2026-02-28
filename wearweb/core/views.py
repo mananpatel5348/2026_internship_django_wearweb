@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import usersignupform, userloginform
 from django.contrib.auth import authenticate, login
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -9,6 +11,13 @@ def usersignupview(request):
     if request.method == 'POST':
         form = usersignupform(request.POST or None)
         if form.is_valid():
+            # email send 
+            email = form.cleaned_data['email']
+            send_mail(subject="Welcome to WearWeb",
+                message="Thank you for signing up for WearWeb! We are excited to have you on board.",
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[email] 
+            )
             form.save()
             return redirect('login')
         else:
