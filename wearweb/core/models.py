@@ -44,6 +44,10 @@ class User(AbstractBaseUser):
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='customer')
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    first_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=30, blank=False)
+    mobile_number = models.CharField(max_length=10, blank=False)
+    gender = models.CharField(max_length=10, blank=False)
     
     objects = UserManager()
     
