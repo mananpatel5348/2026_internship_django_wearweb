@@ -20,7 +20,7 @@ def usersignupview(request):
             email = form.cleaned_data['email']
 
             # -------- PREMIUM EMAIL --------
-            subject = "Welcome to WearWeb 👑"
+            subject = "Welcome to WearWeb "
             from_email = settings.EMAIL_HOST_USER
             to = [email]
 
@@ -29,7 +29,7 @@ def usersignupview(request):
                 <div style="max-width:600px; margin:auto; background:#1a1a1a; padding:30px; border-radius:12px; text-align:center;">
 
                     <h3 style="color:#c5a047; letter-spacing:3px; margin-bottom:5px;">
-                        ✨ Presented by Manan Patel ✨
+                        “Step Into Style with WearWeb”
                     </h3>
 
                     <h1 style="color:#d4af37; font-size:40px; margin:10px 0;">
