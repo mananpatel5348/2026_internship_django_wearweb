@@ -39,6 +39,12 @@ class User(AbstractBaseUser):
         ('customer', 'customer')
     )
 
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('other', 'Other')
+    ]
+
     is_admin = models.BooleanField(default=False)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='customer')
@@ -47,7 +53,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=30, blank=False)
     last_name = models.CharField(max_length=30, blank=False)
     mobile_number = models.CharField(max_length=10, blank=False)
-    gender = models.CharField(max_length=10, blank=False)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=False)
     
     objects = UserManager()
     

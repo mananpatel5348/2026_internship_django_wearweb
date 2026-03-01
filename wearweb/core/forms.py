@@ -5,7 +5,7 @@ from django import forms
 class usersignupform(UserCreationForm):
     class Meta:
         model = User
-        fields = ('email','role','password1','password2','first_name','last_name','mobile_number','gender')
+        fields = ('email','role','first_name','last_name','mobile_number','gender','password1','password2')
         widgets = {
             'password1':forms.PasswordInput,
             'password2':forms.PasswordInput,
