@@ -1,5 +1,16 @@
 <form method="post">
     {% csrf_token %}
-    {{form.as_p}}
+    {{ form.as_p }}
     <button type="submit">Signup</button>
 </form>
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{% static 'css/wear_web_signup.css' %}">
+</head>
+<body>
+  <!-- aapka form yahan -->
+</body>
+</html>

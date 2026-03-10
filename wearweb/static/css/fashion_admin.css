@@ -1,0 +1,353 @@
+/* ================================================
+   WEAR WEB — Django Admin Luxury Fashion CSS
+   Place in: templates/admin/base_site.html
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* ── Variables ── */
+:root {
+  --black:      #0a0a0a;
+  --dark:       #111111;
+  --card:       #141414;
+  --off-white:  #f5f0eb;
+  --gold:       #c9a84c;
+  --gold-light: #e2c97e;
+  --muted:      #666;
+  --border:     rgba(201,168,76,0.25);
+  --error-bg:   rgba(192,57,43,0.12);
+  --error-col:  #e07070;
+}
+
+/* ── Full page reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: var(--black) !important;
+  color: var(--off-white) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 300 !important;
+  min-height: 100vh;
+}
+
+/* Override Django admin white containers */
+#container,
+#content,
+.login #container,
+.login #content,
+.login #main,
+#main,
+.colMS,
+.colSM {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Background glow ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 35%, rgba(201,168,76,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 75%, rgba(201,168,76,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Big W watermark ── */
+body::after {
+  content: 'W';
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(280px, 50vw, 600px);
+  color: rgba(255,255,255,0.02);
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1;
+}
+
+/* ── Login container ── */
+#container,
+#content-main,
+.login {
+  position: relative;
+  z-index: 1;
+}
+
+/* Admin login wrapper */
+#login-form,
+.login #content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Header / Branding ── */
+#header,
+#branding {
+  background: linear-gradient(145deg, #141414, #0f0f0f) !important;
+  border: 1px solid var(--border) !important;
+  border-bottom: none !important;
+  padding: 36px 40px 28px !important;
+  text-align: center !important;
+  box-shadow: none !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+#branding h1,
+#branding h1 a,
+#site-name a,
+#site-name {
+  font-family: 'Playfair Display', serif !important;
+  font-size: clamp(26px, 4vw, 36px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--off-white) !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  display: block !important;
+}
+
+/* Gold subtitle */
+#branding h1::after {
+  content: 'Fashion Admin';
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  color: var(--gold) !important;
+  margin-top: 6px;
+  text-transform: none;
+  opacity: 1 !important;
+}
+
+/* ── Login page layout ── */
+.login #container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login #content {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Gold divider below header */
+#header::after {
+  content: '✦';
+  display: block;
+  text-align: center;
+  color: var(--gold);
+  font-size: 12px;
+  margin-top: 16px;
+  opacity: 0.7;
+}
+
+/* ── Login form card ── */
+.login #content-main {
+  background: linear-gradient(145deg, #141414, #0f0f0f) !important;
+  border: 1px solid var(--border) !important;
+  padding: 44px 40px 40px !important;
+  margin-top: 40px !important;
+  position: relative !important;
+  animation: fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) both !important;
+}
+
+/* Gold corners */
+.login #content-main::before {
+  content: '';
+  position: absolute;
+  top: 14px; left: 14px;
+  width: 26px; height: 26px;
+  border-top: 1px solid var(--gold);
+  border-left: 1px solid var(--gold);
+}
+
+.login #content-main::after {
+  content: '';
+  position: absolute;
+  bottom: 14px; right: 14px;
+  width: 26px; height: 26px;
+  border-bottom: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+}
+
+/* ── Form heading ── */
+.login h1,
+#content h1 {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.4em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+  text-align: center !important;
+  margin-bottom: 32px !important;
+}
+
+/* ── Labels ── */
+label, .form-row label {
+  display: block !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+  margin-bottom: 8px !important;
+}
+
+/* ── Inputs ── */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 0 !important;
+  padding: 10px 0 !important;
+  color: var(--off-white) !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 18px !important;
+  letter-spacing: 0.05em !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: border-color 0.3s ease !important;
+  -webkit-appearance: none !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-bottom-color: var(--gold) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.15) !important;
+  font-style: italic !important;
+}
+
+/* ── Form rows ── */
+.form-row {
+  margin-bottom: 24px !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* ── Error messages ── */
+.errornote,
+.errorlist {
+  background: var(--error-bg) !important;
+  border: none !important;
+  border-left: 2px solid #c0392b !important;
+  color: var(--error-col) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+  padding: 10px 14px !important;
+  margin-bottom: 20px !important;
+  border-radius: 0 !important;
+}
+
+.errornote::before {
+  display: none !important;
+}
+
+/* ── Submit button ── */
+input[type="submit"],
+.submit-row input[type="submit"],
+[type="submit"] {
+  display: block !important;
+  width: 100% !important;
+  background: transparent !important;
+  border: 1px solid var(--gold) !important;
+  color: var(--gold) !important;
+  padding: 16px 32px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.38em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  margin-top: 16px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: background 0.35s ease, color 0.35s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+input[type="submit"]:hover {
+  background: var(--gold) !important;
+  color: var(--black) !important;
+}
+
+input[type="submit"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Password reset link ── */
+.login .password-reset-link,
+#content-main p a,
+.login p a {
+  color: var(--gold) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 0.12em !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid transparent !important;
+  transition: border-color 0.2s !important;
+}
+
+.login p a:hover,
+#content-main p a:hover {
+  border-bottom-color: var(--gold) !important;
+}
+
+/* ── Footer ── */
+#footer {
+  background: transparent !important;
+  border-top: 1px solid var(--border) !important;
+  color: var(--muted) !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 9px !important;
+  letter-spacing: 0.2em !important;
+  text-align: center !important;
+  padding: 16px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* ── Animation ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .login #content-main {
+    padding: 36px 22px 32px !important;
+  }
+}

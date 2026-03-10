@@ -10,6 +10,7 @@ import os
 
 # Create your views here.
 def usersignupview(request):
+    form = usersignupform()
 
     if request.method == 'POST':
         form = usersignupform(request.POST or None)

@@ -1,0 +1,329 @@
+/* ================================================
+   WEAR WEB — Luxury Fashion Login Page CSS
+   Django Template Compatible
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  --black:      #0a0a0a;
+  --off-white:  #f5f0eb;
+  --gold:       #c9a84c;
+  --dark-grey:  #1c1c1c;
+  --text-muted: #888;
+  --error:      #c0392b;
+  --border:     rgba(201,168,76,0.3);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+/* ── Body ── */
+body {
+  background-color: var(--black);
+  color: var(--off-white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Background glow ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 70%, rgba(201,168,76,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Big W watermark ── */
+body::after {
+  content: 'W';
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(300px, 55vw, 650px);
+  color: rgba(255,255,255,0.02);
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+/* ── Wrapper ── */
+.login-wrapper,
+.container,
+main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  padding: 20px;
+}
+
+/* ── Brand Header ── */
+.page-brand {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeSlideUp 0.7s 0.05s both;
+}
+
+.login-brand-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 7vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--off-white);
+  text-transform: uppercase;
+  display: block;
+  line-height: 1;
+}
+
+.login-brand-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.18em;
+  display: block;
+  margin-top: 8px;
+}
+
+/* Gold divider */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px auto 0;
+  width: 70%;
+}
+.login-divider::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.login-divider-icon {
+  color: var(--gold);
+  font-size: 14px;
+}
+
+/* ── Form Card ── */
+form {
+  background: linear-gradient(145deg, #141414 0%, #0f0f0f 100%);
+  border: 1px solid var(--border);
+  padding: 52px 48px 48px;
+  position: relative;
+  animation: fadeSlideUp 0.8s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* Gold corner accents */
+form::before,
+form::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--gold);
+  border-style: solid;
+}
+form::before { top: 14px; left: 14px; border-width: 1px 0 0 1px; }
+form::after  { bottom: 14px; right: 14px; border-width: 0 1px 1px 0; }
+
+/* ── Form fields ── */
+p, .form-group {
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Labels ── */
+label, p > label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  order: -1;
+  transition: color 0.25s;
+}
+
+/* ── Inputs ── */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding: 10px 0;
+  color: var(--off-white);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  border-radius: 0;
+  appearance: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-bottom-color: var(--gold);
+  color: #fff;
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.15);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+}
+
+/* ── Error messages ── */
+ul.errorlist { list-style: none; padding: 0; margin-bottom: 6px; }
+.errorlist li {
+  color: #e07070;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  font-family: 'Montserrat', sans-serif;
+  padding: 3px 0 3px 12px;
+  position: relative;
+}
+.errorlist li::before { content: '!'; position: absolute; left: 0; color: var(--error); }
+
+/* ── Non-field errors ── */
+.non-field-errors {
+  background: rgba(192,57,43,0.1);
+  border-left: 2px solid var(--error);
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #e07070;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Submit Button ── */
+input[type="submit"],
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 17px 32px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+}
+
+input[type="submit"]::before,
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  z-index: 0;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+  color: var(--black);
+}
+
+input[type="submit"]:hover::before,
+button[type="submit"]:hover::before {
+  transform: scaleX(1);
+}
+
+input[type="submit"]:active,
+button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* ── Signup link ── */
+.signup-link {
+  text-align: center;
+  margin-top: 26px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  font-family: 'Montserrat', sans-serif;
+  animation: fadeSlideUp 0.6s 0.5s both;
+}
+
+.signup-link a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.signup-link a:hover {
+  border-bottom-color: var(--gold);
+}
+
+/* ── Animations ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+p { animation: fadeSlideUp 0.6s both; }
+p:nth-child(1) { animation-delay: 0.15s; }
+p:nth-child(2) { animation-delay: 0.25s; }
+p:nth-child(3) { animation-delay: 0.35s; }
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  form { padding: 40px 24px 36px; }
+}
