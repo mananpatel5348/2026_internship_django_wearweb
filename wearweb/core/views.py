@@ -6,7 +6,11 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from email.mime.image import MIMEImage
 import os
+from django.contrib.auth import logout
 
+def userlogoutview(request):
+    logout(request)
+    return redirect('/')
 
 # Create your views here.
 def usersignupview(request):

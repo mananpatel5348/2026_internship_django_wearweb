@@ -14,17 +14,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django import views
 from django.contrib import admin
 from django.urls import path,include
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def home(request):
-    return HttpResponse("welcome to wearweb")
+    return render(request, 'core/home.html') 
 
 urlpatterns = [
-    path('', home),
+    path('', home),                              # 127.0.0.1:8000 → Welcome
+    path('login/', lambda r: render(r, 'core/login.html')),    # /login/
+    path('signup/', lambda r: render(r, 'core/signup.html')),  # /signup/
     path('admin/', admin.site.urls),
-    path("core/", include('core.urls')),
-    path("wear/", include('wear.urls'))
+    path('core/', include('core.urls')),
+    path('wear/', include('wear.urls')),
 ]
-

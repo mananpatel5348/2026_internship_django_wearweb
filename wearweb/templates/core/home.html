@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WEAR WEB — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --accent: #c8a96e;
+      --accent2: #e8c98e;
+      --text: #f5f0e8;
+      --muted: #888;
+      --border: rgba(200,169,110,0.2);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* BACKGROUND */
+    .bg-art {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(200,169,110,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,169,110,0.05) 0%, transparent 70%);
+    }
+    .bg-art::after {
+      content:'';
+      position:absolute; inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a96e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      background: rgba(13,13,13,0.85);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 900; letter-spacing: -0.5px;
+      color: var(--text); text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-btn {
+      padding: 9px 22px; border-radius: 6px; font-size: 14px;
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: all 0.25s; font-weight: 500;
+      text-decoration: none; display: inline-block;
+    }
+    .nav-btn.ghost {
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .nav-btn.ghost:hover { color: var(--text); border-color: var(--accent); }
+    .nav-btn.solid {
+      background: var(--accent); color: #0d0d0d; border: none;
+    }
+    .nav-btn.solid:hover { background: var(--accent2); }
+    .nav-btn.admin-btn {
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .nav-btn.admin-btn:hover { background: rgba(200,169,110,0.1); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 120px 24px 80px;
+    }
+
+    .welcome-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 50px;
+      border: 1px solid var(--border);
+      background: rgba(200,169,110,0.06);
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .welcome-tag::before {
+      content:''; width:6px; height:6px; border-radius:50%;
+      background: var(--accent); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -2px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+
+    .hero-sub {
+      margin: 24px auto 0; max-width: 480px;
+      font-size: 17px; color: var(--muted); line-height: 1.7;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-ctas {
+      margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .cta-btn {
+      padding: 15px 36px; border-radius: 8px; font-size: 15px;
+      font-weight: 500; cursor: pointer; transition: all 0.25s;
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none; display: inline-block;
+    }
+    .cta-primary { background: var(--accent); color: #0d0d0d; border: none; }
+    .cta-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,169,110,0.3); }
+    .cta-secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .cta-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* FEATURES */
+    .features {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 0 48px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .feat-card {
+      padding: 28px; border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      text-align: left; transition: all 0.3s;
+    }
+    .feat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .feat-icon { font-size: 28px; margin-bottom: 14px; }
+    .feat-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .feat-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .logo { font-size: 20px; }
+      .nav-links { gap: 6px; }
+      .nav-btn { padding: 7px 14px; font-size: 12px; }
+      .features { padding: 0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-art"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+ <div class="nav-links">
+    {% if user.is_authenticated %}
+      <span style="color: var(--accent); font-size: 14px; padding: 9px 12px;">👤 {{ user.username }}</span>
+      <a href="/core/logout/" class="nav-btn admin-btn">Logout</a>
+    {% else %}
+      <a href="/core/login/" class="nav-btn ghost">Login</a>
+      <a href="/core/signup/" class="nav-btn solid">Sign Up</a>
+      <a href="/admin/" class="nav-btn admin-btn">Admin ⚡</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="welcome-tag">✦ Fashion Redefined</div>
+  <h1 class="hero-title">Welcome to<br/><em>WearWeb</em></h1>
+  <p class="hero-sub">Discover curated fashion collections, effortless shopping, and style that speaks for itself. Your wardrobe, elevated.</p>
+  <div class="hero-ctas">
+    <a href="/core/signup/" class="cta-btn cta-primary">Get Started Free</a>
+    <a href="/core/login/" class="cta-btn cta-secondary">Already have an account?</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feat-card">
+    <div class="feat-icon">👗</div>
+    <div class="feat-title">Curated Collections</div>
+    <div class="feat-desc">Hand-picked styles updated every season for the modern wardrobe.</div>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">🚀</div>
+    <div class="feat-title">Fast Delivery</div>
+    <div class="feat-desc">Lightning-fast shipping across India with real-time tracking.</div>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">🔒</div>
+    <div class="feat-title">Secure Payments</div>
+    <div class="feat-desc">UPI, cards, wallets — all secured with bank-grade encryption.</div>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">↩️</div>
+    <div class="feat-title">Easy Returns</div>
+    <div class="feat-desc">30-day hassle-free return policy. No questions asked.</div>
+  </div>
+</div>
+
+</body>
+</html>

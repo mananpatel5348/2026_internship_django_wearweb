@@ -1,1 +1,13 @@
 customer navbar
+{% load static %}
+<link rel="stylesheet" href="{% static 'admin/css/wear_web_navbar.css' %}">
+
+{% if user.is_authenticated %}
+    <span>{{ user.username }}</span>
+    <a href="{% url 'logout' %}">
+        <button class="logout-btn">Logout</button>
+    </a>
+{% else %}
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
