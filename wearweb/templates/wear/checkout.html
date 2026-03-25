@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e;
+      --accent:#c8a96e; --accent2:#e8c98e;
+      --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2);
+    }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:18px 48px; border-bottom:1px solid var(--border);
+      backdrop-filter:blur(20px); background:rgba(13,13,13,0.85);
+    }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-links { display:flex; gap:8px; }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.25s; font-weight:500; text-decoration:none; display:inline-block; }
+    .nav-btn.ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .nav-btn.ghost:hover { color:var(--text); border-color:var(--accent); }
+
+    .page { padding:100px 48px 60px; max-width:1100px; margin:0 auto; }
+    .page-title { font-family:'Playfair Display',serif; font-size:38px; font-weight:900; margin-bottom:40px; }
+    .page-title span { color:var(--accent); }
+
+    .checkout-grid { display:grid; grid-template-columns:1fr 380px; gap:32px; }
+
+    /* FORM */
+    .form-card { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:32px; }
+    .form-card h3 { font-size:18px; font-weight:600; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label { display:block; font-size:13px; color:var(--muted); margin-bottom:8px; letter-spacing:0.5px; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width:100%; padding:12px 16px; border-radius:8px;
+      background:var(--surface2); border:1px solid var(--border);
+      color:var(--text); font-size:14px; font-family:'DM Sans',sans-serif;
+      transition:border-color 0.2s; outline:none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color:var(--accent); }
+    .form-group textarea { resize:vertical; min-height:80px; }
+
+    /* PAYMENT */
+    .payment-options { display:flex; flex-direction:column; gap:12px; margin-top:8px; }
+    .payment-option {
+      display:flex; align-items:center; gap:14px;
+      padding:16px; border-radius:10px;
+      border:1px solid var(--border); cursor:pointer;
+      transition:all 0.2s;
+    }
+    .payment-option:hover { border-color:var(--accent); }
+    .payment-option input[type="radio"] { accent-color:var(--accent); width:16px; height:16px; }
+    .payment-option-label { font-size:14px; font-weight:500; }
+    .payment-option-sub { font-size:12px; color:var(--muted); }
+
+    /* ORDER SUMMARY */
+    .summary { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:28px; position:sticky; top:90px; height:fit-content; }
+    .summary h3 { font-family:'Playfair Display',serif; font-size:20px; margin-bottom:20px; }
+    .summary-item { display:flex; gap:12px; align-items:center; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+    .summary-item:last-of-type { border-bottom:none; }
+    .s-img { width:52px; height:52px; border-radius:8px; overflow:hidden; background:var(--surface2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:20px; }
+    .s-img img { width:100%; height:100%; object-fit:cover; }
+    .s-info { flex:1; }
+    .s-name { font-size:13px; font-weight:500; margin-bottom:3px; }
+    .s-qty { font-size:12px; color:var(--muted); }
+    .s-price { font-size:14px; color:var(--accent); font-weight:600; }
+    .summary-total { margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+    .total-row { display:flex; justify-content:space-between; font-size:14px; color:var(--muted); margin-bottom:10px; }
+    .total-row.final { color:var(--text); font-size:18px; font-weight:600; }
+    .total-row.final span:last-child { color:var(--accent); font-size:22px; }
+
+    .place-order-btn {
+      width:100%; padding:16px; border-radius:10px;
+      background:var(--accent); color:#0d0d0d;
+      border:none; font-size:16px; font-weight:700;
+      cursor:pointer; margin-top:20px; transition:all 0.2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .place-order-btn:hover { background:var(--accent2); transform:translateY(-2px); }
+
+    @media(max-width:768px) {
+      .checkout-grid { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; }
+      .page { padding:90px 20px 40px; }
+      nav { padding:16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+  <div class="nav-links">
+    <a href="/wear/cart/" class="nav-btn ghost">← Back to Cart</a>
+  </div>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">Check<span>out</span></h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="checkout-grid">
+
+      <!-- LEFT: ADDRESS + PAYMENT -->
+      <div>
+        <!-- DELIVERY ADDRESS -->
+        <div class="form-card" style="margin-bottom:24px;">
+          <h3>📦 Delivery Address</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" name="full_name" placeholder="Manan Patel" required/>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="text" name="phone" placeholder="9876543210" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <textarea name="address_line" placeholder="House no, Street, Area..." required></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" name="city" placeholder="Ahmedabad" required/>
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <input type="text" name="state" placeholder="Gujarat" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Pincode</label>
+            <input type="text" name="pincode" placeholder="380001" required/>
+          </div>
+        </div>
+
+        <!-- PAYMENT -->
+        <div class="form-card">
+          <h3>💳 Payment Method</h3>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="payment" value="cod" checked/>
+              <div>
+                <div class="payment-option-label">💵 Cash on Delivery</div>
+                <div class="payment-option-sub">Pay when order arrives</div>
+              </div>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment" value="upi"/>
+              <div>
+                <div class="payment-option-label">📱 UPI Payment</div>
+                <div class="payment-option-sub">GPay, PhonePe, Paytm</div>
+              </div>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="payment" value="card"/>
+              <div>
+                <div class="payment-option-label">💳 Credit / Debit Card</div>
+                <div class="payment-option-sub">Visa, Mastercard, RuPay</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: ORDER SUMMARY -->
+      <div class="summary">
+        <h3>Order Summary</h3>
+        {% for item in items %}
+          <div class="summary-item">
+            <div class="s-img">
+              {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"/>
+              {% else %}👗{% endif %}
+            </div>
+            <div class="s-info">
+              <div class="s-name">{{ item.product.name }}</div>
+              <div class="s-qty">Qty: {{ item.quantity }}</div>
+            </div>
+            <div class="s-price">₹{{ item.get_subtotal }}</div>
+          </div>
+        {% endfor %}
+        <div class="summary-total">
+          <div class="total-row"><span>Subtotal</span><span>₹{{ cart.get_total }}</span></div>
+          <div class="total-row"><span>Delivery</span><span style="color:#4caf50;">FREE</span></div>
+          <div class="total-row final"><span>Total</span><span>₹{{ cart.get_total }}</span></div>
+        </div>
+        <button type="submit" class="place-order-btn">🎉 Place Order</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+</body>
+</html>

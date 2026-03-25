@@ -1,7 +1,191 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1>Seller Dashboard</h1>
-{{request.user.role}}
-<p>{{request.user}}</p>
-{% endblock content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e;
+      --accent:#c8a96e; --accent2:#e8c98e;
+      --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2);
+    }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:18px 48px; border-bottom:1px solid var(--border);
+      backdrop-filter:blur(20px); background:rgba(13,13,13,0.85);
+    }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-links { display:flex; gap:8px; align-items:center; }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.25s; font-weight:500; text-decoration:none; display:inline-block; }
+    .nav-btn.ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .nav-btn.ghost:hover { color:var(--text); border-color:var(--accent); }
+    .nav-btn.solid { background:var(--accent); color:#0d0d0d; border:none; }
+    .nav-btn.solid:hover { background:var(--accent2); }
 
+    .layout { display:grid; grid-template-columns:260px 1fr; min-height:100vh; padding-top:72px; }
+
+    .sidebar {
+      background:var(--surface); border-right:1px solid var(--border);
+      padding:32px 20px; position:sticky; top:72px;
+      height:calc(100vh - 72px); overflow-y:auto;
+    }
+    .user-card { text-align:center; margin-bottom:32px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+    .user-avatar { width:72px; height:72px; border-radius:50%; background:rgba(200,169,110,0.15); border:2px solid var(--accent); display:flex; align-items:center; justify-content:center; font-size:28px; margin:0 auto 12px; }
+    .user-name { font-size:16px; font-weight:600; margin-bottom:4px; }
+    .user-email { font-size:12px; color:var(--muted); }
+    .user-role { display:inline-block; margin-top:8px; padding:3px 12px; border-radius:50px; background:rgba(200,169,110,0.1); border:1px solid var(--border); color:var(--accent); font-size:11px; }
+    .sidebar-menu { display:flex; flex-direction:column; gap:4px; }
+    .menu-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; text-decoration:none; color:var(--muted); font-size:14px; transition:all 0.2s; }
+    .menu-item:hover { background:var(--surface2); color:var(--text); }
+    .menu-item.active { background:rgba(200,169,110,0.1); color:var(--accent); border:1px solid var(--border); }
+    .menu-icon { font-size:16px; width:20px; }
+
+    .main { padding:40px 48px; }
+    .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; }
+    .page-header h1 { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; }
+    .page-header h1 span { color:var(--accent); }
+    .add-btn { padding:12px 24px; border-radius:10px; background:var(--accent); color:#0d0d0d; text-decoration:none; font-weight:600; font-size:14px; transition:all 0.2s; }
+    .add-btn:hover { background:var(--accent2); }
+
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:40px; }
+    .stat-card { background:var(--surface); border-radius:14px; border:1px solid var(--border); padding:24px; transition:all 0.3s; }
+    .stat-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .stat-icon { font-size:28px; margin-bottom:12px; }
+    .stat-value { font-size:28px; font-weight:700; color:var(--accent); }
+    .stat-label { font-size:13px; color:var(--muted); margin-top:4px; }
+
+    .section-title { font-family:'Playfair Display',serif; font-size:22px; margin-bottom:20px; }
+    .section-title span { color:var(--accent); }
+
+    .msg { padding:12px 20px; border-radius:8px; margin-bottom:20px; font-size:14px; background:rgba(200,169,110,0.1); border:1px solid var(--border); color:var(--accent); }
+
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:20px; }
+    .product-card { background:var(--surface); border-radius:14px; border:1px solid var(--border); overflow:hidden; transition:all 0.3s; }
+    .product-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+    .product-img { height:200px; overflow:hidden; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:40px; }
+    .product-img img { width:100%; height:100%; object-fit:cover; }
+    .product-body { padding:16px; }
+    .product-category { font-size:11px; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+    .product-name { font-size:15px; font-weight:500; margin-bottom:8px; }
+    .product-price { font-size:18px; color:var(--accent); font-weight:700; margin-bottom:4px; }
+    .product-stock { font-size:12px; color:var(--muted); }
+    .product-actions { display:flex; gap:8px; padding:0 16px 16px; }
+    .btn-edit { flex:1; padding:9px; border-radius:8px; background:transparent; border:1px solid var(--border); color:var(--muted); font-size:13px; cursor:pointer; text-decoration:none; text-align:center; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+    .btn-edit:hover { border-color:var(--accent); color:var(--accent); }
+    .btn-delete { flex:1; padding:9px; border-radius:8px; background:transparent; border:1px solid rgba(244,67,54,0.3); color:#f44336; font-size:13px; cursor:pointer; text-decoration:none; text-align:center; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+    .btn-delete:hover { background:rgba(244,67,54,0.1); }
+
+    .empty { text-align:center; padding:60px 20px; color:var(--muted); }
+    .empty .icon { font-size:48px; margin-bottom:16px; }
+    .empty h3 { font-size:18px; color:var(--text); margin-bottom:8px; }
+
+    @media(max-width:768px) {
+      .layout { grid-template-columns:1fr; }
+      .sidebar { position:relative; height:auto; }
+      .main { padding:24px 20px; }
+      .stats { grid-template-columns:1fr; }
+      nav { padding:16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+  <div class="nav-links">
+    <a href="/wear/seller/add-product/" class="nav-btn solid">+ Add Product</a>
+    <a href="/core/logout/" class="nav-btn ghost">Logout</a>
+  </div>
+</nav>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="user-card">
+      <div class="user-avatar">🏪</div>
+      <div class="user-name">{{ user.first_name|default:user.email }}</div>
+      <div class="user-email">{{ user.email }}</div>
+      <span class="user-role">Seller</span>
+    </div>
+    <div class="sidebar-menu">
+      <a href="/wear/seller/" class="menu-item active">
+        <span class="menu-icon">📦</span> My Products
+      </a>
+      <a href="/wear/seller/add-product/" class="menu-item">
+        <span class="menu-icon">➕</span> Add Product
+      </a>
+      <a href="/core/logout/" class="menu-item">
+        <span class="menu-icon">🚪</span> Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <h1>Seller <span>Dashboard</span></h1>
+      <a href="/wear/seller/add-product/" class="add-btn">+ Add Product</a>
+    </div>
+
+    {% for msg in messages %}
+      <div class="msg">{{ msg }}</div>
+    {% endfor %}
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-icon">👗</div>
+        <div class="stat-value">{{ products.count }}</div>
+        <div class="stat-label">Total Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-value">{{ total_orders }}</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">₹{{ total_revenue }}</div>
+        <div class="stat-label">Total Revenue</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">My <span>Products</span></h2>
+
+    {% if products %}
+      <div class="products-grid">
+        {% for product in products %}
+          <div class="product-card">
+            <div class="product-img">
+              {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}"/>
+              {% else %}👗{% endif %}
+            </div>
+            <div class="product-body">
+              <div class="product-category">{{ product.category.name }}</div>
+              <div class="product-name">{{ product.name }}</div>
+              <div class="product-price">₹{{ product.price }}</div>
+              <div class="product-stock">Stock: {{ product.stock }}</div>
+            </div>
+            <div class="product-actions">
+              <a href="/wear/products/{{ product.pk }}/" class="btn-edit">View</a>
+              <a href="/wear/seller/delete-product/{{ product.pk }}/" class="btn-delete">Delete</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">
+        <div class="icon">📦</div>
+        <h3>Koi product nahi abhi tak!</h3>
+        <p>Apna pehla product add karo</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Order Placed — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root { --bg:#0d0d0d; --surface:#161616; --accent:#c8a96e; --accent2:#e8c98e; --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2); }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; align-items:center; justify-content:center; }
+    .card {
+      background:var(--surface); border-radius:24px;
+      border:1px solid var(--border); padding:60px 48px;
+      text-align:center; max-width:500px; width:90%;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .success-icon { font-size:72px; margin-bottom:24px; animation: bounce 0.6s 0.3s ease both; }
+    @keyframes bounce { 0%{transform:scale(0.5)} 70%{transform:scale(1.1)} 100%{transform:scale(1)} }
+    h1 { font-family:'Playfair Display',serif; font-size:32px; margin-bottom:12px; }
+    h1 span { color:var(--accent); }
+    p { color:var(--muted); font-size:15px; line-height:1.7; margin-bottom:8px; }
+    .order-id { display:inline-block; margin:20px 0; padding:10px 24px; border-radius:50px; background:rgba(200,169,110,0.1); border:1px solid var(--border); color:var(--accent); font-size:14px; font-weight:600; }
+    .btn-group { display:flex; gap:12px; justify-content:center; margin-top:32px; flex-wrap:wrap; }
+    .btn { padding:13px 28px; border-radius:10px; font-size:14px; font-weight:600; text-decoration:none; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+    .btn-primary { background:var(--accent); color:#0d0d0d; }
+    .btn-primary:hover { background:var(--accent2); }
+    .btn-secondary { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+    .btn-secondary:hover { background:rgba(200,169,110,0.1); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="success-icon">🎉</div>
+    <h1>Order <span>Placed!</span></h1>
+    <p>Shukriya! Tumhara order successfully place ho gaya hai.</p>
+    <p>Jald hi tumhare paas deliver ho jayega.</p>
+    <div class="order-id">Order #{{ order.id }}</div>
+    <div class="btn-group">
+      <a href="/wear/products/" class="btn btn-primary">Continue Shopping</a>
+      <a href="/" class="btn btn-secondary">Go Home</a>
+    </div>
+  </div>
+</body>
+</html>

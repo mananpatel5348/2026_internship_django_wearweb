@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Product — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root { --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e; --accent:#c8a96e; --accent2:#e8c98e; --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2); }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; border-bottom:1px solid var(--border); backdrop-filter:blur(20px); background:rgba(13,13,13,0.85); }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.25s; font-weight:500; text-decoration:none; display:inline-block; background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .nav-btn:hover { color:var(--text); border-color:var(--accent); }
+
+    .page { padding:100px 48px 60px; max-width:700px; margin:0 auto; }
+    .page-title { font-family:'Playfair Display',serif; font-size:36px; font-weight:900; margin-bottom:32px; }
+    .page-title span { color:var(--accent); }
+
+    .form-card { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:36px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label { display:block; font-size:13px; color:var(--muted); margin-bottom:8px; letter-spacing:0.5px; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width:100%; padding:12px 16px; border-radius:8px;
+      background:var(--surface2); border:1px solid var(--border);
+      color:var(--text); font-size:14px; font-family:'DM Sans',sans-serif;
+      transition:border-color 0.2s; outline:none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color:var(--accent); }
+    .form-group textarea { resize:vertical; min-height:100px; }
+    .form-group select option { background:var(--surface2); }
+
+    .submit-btn { width:100%; padding:16px; border-radius:10px; background:var(--accent); color:#0d0d0d; border:none; font-size:16px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif; margin-top:8px; }
+    .submit-btn:hover { background:var(--accent2); transform:translateY(-2px); }
+
+    @media(max-width:600px) {
+      .form-row { grid-template-columns:1fr; }
+      .page { padding:90px 20px 40px; }
+      nav { padding:16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+  <a href="/wear/seller/" class="nav-btn">← Back to Dashboard</a>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">Add <span>Product</span></h1>
+
+  <div class="form-card">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" name="name" placeholder="Classic White Shirt" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" placeholder="Product ki detail likho..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price (₹)</label>
+          <input type="number" name="price" placeholder="999" required/>
+        </div>
+        <div class="form-group">
+          <label>Discount Price (₹) — Optional</label>
+          <input type="number" name="discount_price" placeholder="799"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select name="category" required>
+            <option value="">Select category</option>
+            {% for cat in categories %}
+              <option value="{{ cat.pk }}">{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" name="stock" placeholder="50" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Product Image</label>
+        <input type="file" name="image" accept="image/*" required/>
+      </div>
+
+      <button type="submit" class="submit-btn">🚀 Add Product</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
