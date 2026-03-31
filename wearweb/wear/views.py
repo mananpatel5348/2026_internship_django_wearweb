@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import role_required
-from .models import Product, Category, Cart, CartItem
-from .models import Product, Category, Cart, CartItem, Order, OrderItem, Address
+from .models import Product, Category, Cart, CartItem, Order, OrderItem, Address, Review
+
 
 @role_required(allowd_roles=['customer'])
 def customerdashboardview(request):
@@ -82,13 +82,42 @@ def admindashboardview(request):
 def product_list(request):
     products = Product.objects.filter(is_available=True)
     categories = Category.objects.all()
+
+    # Search
+    search_query = request.GET.get('search', '')
+    if search_query:
+        products = products.filter(name__icontains=search_query)
+
+    # Category filter
     selected_category = request.GET.get('category', '')
     if selected_category:
         products = products.filter(category__slug=selected_category)
+
+    # Price filter
+    min_price = request.GET.get('min_price', '')
+    max_price = request.GET.get('max_price', '')
+    if min_price:
+        products = products.filter(price__gte=min_price)
+    if max_price:
+        products = products.filter(price__lte=max_price)
+
+    # Sort
+    sort = request.GET.get('sort', '')
+    if sort == 'price_low':
+        products = products.order_by('price')
+    elif sort == 'price_high':
+        products = products.order_by('-price')
+    elif sort == 'newest':
+        products = products.order_by('-created_at')
+
     return render(request, 'wear/product_list.html', {
         'products': products,
         'categories': categories,
-        'selected_category': selected_category
+        'selected_category': selected_category,
+        'search_query': search_query,
+        'min_price': min_price,
+        'max_price': max_price,
+        'sort': sort,
     })
 
 def product_detail(request, pk):
@@ -96,9 +125,32 @@ def product_detail(request, pk):
     related = Product.objects.filter(
         category=product.category, is_available=True
     ).exclude(pk=pk)[:4]
+    reviews = product.reviews.all().order_by('-created_at')
+    avg_rating = round(sum(r.rating for r in reviews) / reviews.count(), 1) if reviews.count() > 0 else 0
+    user_reviewed = False
+    if request.user.is_authenticated:
+        user_reviewed = reviews.filter(user=request.user).exists()
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        if not user_reviewed:
+            rating = int(request.POST.get('rating', 5))
+            comment = request.POST.get('comment', '')
+            if comment:
+                Review.objects.create(
+                    product=product,
+                    user=request.user,
+                    rating=rating,
+                    comment=comment
+                )
+                messages.success(request, 'Review submit ho gaya! ⭐')
+                return redirect(f'/wear/products/{pk}/')
+
     return render(request, 'wear/product_detail.html', {
         'product': product,
-        'related': related
+        'related': related,
+        'reviews': reviews,
+        'avg_rating': avg_rating,
+        'user_reviewed': user_reviewed,
     })
 
 @login_required(login_url='/core/login/')
@@ -156,6 +208,23 @@ def checkout_view(request):
     if not items:
         return redirect('cart')
 
+    return render(request, 'wear/checkout.html', {
+        'cart': cart,
+        'items': items,
+    })
+
+
+@login_required(login_url='/core/login/')
+def payment_view(request):
+    try:
+        cart = Cart.objects.get(user=request.user)
+        items = cart.items.all()
+    except Cart.DoesNotExist:
+        return redirect('product_list')
+
+    if not items:
+        return redirect('cart')
+
     if request.method == 'POST':
         # Address save karo
         address = Address.objects.create(
@@ -167,6 +236,41 @@ def checkout_view(request):
             state=request.POST.get('state'),
             pincode=request.POST.get('pincode'),
         )
+        # Session mein address save karo
+        request.session['address_id'] = address.pk
+        request.session['payment_method'] = request.POST.get('payment')
+        return redirect('payment_page')
+
+    return redirect('checkout')
+
+
+@login_required(login_url='/core/login/')
+def payment_page(request):
+    try:
+        cart = Cart.objects.get(user=request.user)
+        items = cart.items.all()
+    except Cart.DoesNotExist:
+        return redirect('cart')
+
+    total = cart.get_total()
+    payment_method = request.session.get('payment_method', 'cod')
+
+    return render(request, 'wear/payment.html', {
+        'cart': cart,
+        'items': items,
+        'total': total,
+        'payment_method': payment_method,
+    })
+
+
+@login_required(login_url='/core/login/')
+def process_payment(request):
+    if request.method == 'POST':
+        try:
+            cart = Cart.objects.get(user=request.user)
+            items = cart.items.all()
+        except Cart.DoesNotExist:
+            return redirect('cart')
 
         # Order banao
         order = Order.objects.create(
@@ -187,15 +291,21 @@ def checkout_view(request):
         # Cart clear karo
         items.delete()
 
+        # Session clear karo
+        request.session.pop('address_id', None)
+        request.session.pop('payment_method', None)
+
         return redirect(f'/wear/order-success/{order.pk}/')
 
-    return render(request, 'wear/checkout.html', {
-        'cart': cart,
-        'items': items,
-    })
+    return redirect('cart')
 
 
 @login_required(login_url='/core/login/')
 def order_success_view(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
     return render(request, 'wear/order_success.html', {'order': order})
+
+@login_required(login_url='/core/login/')
+def order_tracking(request, pk):
+    order = get_object_or_404(Order, pk=pk, user=request.user)
+    return render(request, 'wear/order_tracking.html', {'order': order})

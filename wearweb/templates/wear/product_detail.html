@@ -14,7 +14,6 @@
       --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2);
     }
     body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
-
     nav {
       position:fixed; top:0; left:0; right:0; z-index:100;
       display:flex; align-items:center; justify-content:space-between;
@@ -29,102 +28,48 @@
     .nav-btn.ghost:hover { color:var(--text); border-color:var(--accent); }
     .nav-btn.solid { background:var(--accent); color:#0d0d0d; border:none; }
     .nav-btn.solid:hover { background:var(--accent2); }
-
     .page { padding:100px 48px 60px; max-width:1200px; margin:0 auto; }
-
-    /* BREADCRUMB */
     .breadcrumb { display:flex; gap:8px; align-items:center; margin-bottom:40px; font-size:13px; color:var(--muted); }
     .breadcrumb a { color:var(--muted); text-decoration:none; }
     .breadcrumb a:hover { color:var(--accent); }
     .breadcrumb span { color:var(--accent); }
-
-    /* PRODUCT DETAIL */
     .product-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-bottom:80px; }
-
-    .product-img-wrap {
-      border-radius:20px; overflow:hidden;
-      border:1px solid var(--border);
-      background:var(--surface);
-      aspect-ratio:3/4;
-      display:flex; align-items:center; justify-content:center;
-    }
+    .product-img-wrap { border-radius:20px; overflow:hidden; border:1px solid var(--border); background:var(--surface); aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; }
     .product-img-wrap img { width:100%; height:100%; object-fit:cover; }
     .product-img-wrap .no-img { font-size:80px; }
-
     .product-info { display:flex; flex-direction:column; gap:20px; padding-top:10px; }
-
     .product-category { font-size:12px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; }
-
     .product-name { font-family:'Playfair Display',serif; font-size:36px; font-weight:700; line-height:1.2; }
-
     .product-price { display:flex; align-items:center; gap:14px; }
     .price-final { font-size:32px; font-weight:700; color:var(--accent); }
     .price-original { font-size:18px; color:var(--muted); text-decoration:line-through; }
     .price-badge { font-size:13px; padding:4px 12px; border-radius:50px; background:rgba(200,169,110,0.15); color:var(--accent); border:1px solid var(--border); }
-
     .divider { height:1px; background:var(--border); }
-
     .product-desc { color:var(--muted); font-size:15px; line-height:1.8; }
-
     .stock-info { display:flex; align-items:center; gap:8px; font-size:14px; }
     .stock-dot { width:8px; height:8px; border-radius:50%; background:#4caf50; }
     .stock-dot.low { background:#ff9800; }
     .stock-dot.out { background:#f44336; }
-
-    /* QUANTITY */
     .qty-wrap { display:flex; align-items:center; gap:0; }
     .qty-label { font-size:14px; color:var(--muted); margin-right:16px; }
-    .qty-btn {
-      width:40px; height:40px; border-radius:8px;
-      background:var(--surface2); border:1px solid var(--border);
-      color:var(--text); font-size:18px; cursor:pointer;
-      transition:all 0.2s; display:flex; align-items:center; justify-content:center;
-    }
+    .qty-btn { width:40px; height:40px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); color:var(--text); font-size:18px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; }
     .qty-btn:hover { border-color:var(--accent); color:var(--accent); }
-    .qty-display {
-      width:50px; height:40px; text-align:center;
-      background:var(--surface); border:1px solid var(--border);
-      border-left:none; border-right:none;
-      color:var(--text); font-size:16px; font-weight:500;
-      display:flex; align-items:center; justify-content:center;
-    }
-
-    /* BUTTONS */
+    .qty-display { width:50px; height:40px; text-align:center; background:var(--surface); border:1px solid var(--border); border-left:none; border-right:none; color:var(--text); font-size:16px; font-weight:500; display:flex; align-items:center; justify-content:center; }
     .btn-group { display:flex; gap:12px; }
-    .btn-primary {
-      flex:1; padding:16px; border-radius:10px;
-      background:var(--accent); color:#0d0d0d;
-      border:none; font-size:15px; font-weight:600;
-      cursor:pointer; transition:all 0.2s;
-      font-family:'DM Sans',sans-serif;
-    }
+    .btn-primary { flex:1; padding:16px; border-radius:10px; background:var(--accent); color:#0d0d0d; border:none; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif; text-decoration:none; display:block; text-align:center; }
     .btn-primary:hover { background:var(--accent2); transform:translateY(-2px); }
-    .btn-secondary {
-      padding:16px 24px; border-radius:10px;
-      background:transparent; color:var(--accent);
-      border:1px solid var(--accent); font-size:15px;
-      cursor:pointer; transition:all 0.2s;
-      font-family:'DM Sans',sans-serif;
-    }
+    .btn-secondary { padding:16px 24px; border-radius:10px; background:transparent; color:var(--accent); border:1px solid var(--accent); font-size:15px; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
     .btn-secondary:hover { background:rgba(200,169,110,0.1); }
-
-    /* RELATED */
     .related-section h2 { font-family:'Playfair Display',serif; font-size:28px; margin-bottom:24px; }
     .related-section h2 span { color:var(--accent); }
     .related-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:20px; }
-    .rel-card {
-      background:var(--surface); border-radius:12px;
-      border:1px solid var(--border); overflow:hidden;
-      text-decoration:none; color:var(--text);
-      transition:all 0.3s; display:block;
-    }
+    .rel-card { background:var(--surface); border-radius:12px; border:1px solid var(--border); overflow:hidden; text-decoration:none; color:var(--text); transition:all 0.3s; display:block; }
     .rel-card:hover { border-color:var(--accent); transform:translateY(-4px); }
     .rel-img { height:200px; overflow:hidden; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:40px; }
     .rel-img img { width:100%; height:100%; object-fit:cover; }
     .rel-body { padding:14px; }
     .rel-name { font-size:14px; font-weight:500; margin-bottom:6px; }
     .rel-price { font-size:16px; color:var(--accent); font-weight:600; }
-
     @media(max-width:768px) {
       .product-grid { grid-template-columns:1fr; gap:30px; }
       .page { padding:90px 20px 40px; }
@@ -134,12 +79,11 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav>
   <a class="logo" href="/">Wear<span>Web</span></a>
   <div class="nav-links">
     {% if user.is_authenticated %}
-      <span style="color:var(--accent);font-size:14px;padding:8px 12px;">👤 {{ user.username }}</span>
+      <span style="color:var(--accent);font-size:14px;padding:8px 12px;">👤 {{ user.email }}</span>
       <a href="/core/logout/" class="nav-btn ghost">Logout</a>
     {% else %}
       <a href="/core/login/" class="nav-btn ghost">Login</a>
@@ -152,18 +96,16 @@
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
-    <a href="/">Home</a> › 
-    <a href="/wear/products/">Products</a> › 
+    <a href="/">Home</a> ›
+    <a href="/wear/products/">Products</a> ›
     {% if product.category %}
-      <a href="/wear/products/?category={{ product.category.slug }}">{{ product.category.name }}</a> › 
+      <a href="/wear/products/?category={{ product.category.slug }}">{{ product.category.name }}</a> ›
     {% endif %}
     <span>{{ product.name }}</span>
   </div>
 
   <!-- PRODUCT DETAIL -->
   <div class="product-grid">
-
-    <!-- IMAGE -->
     <div class="product-img-wrap">
       {% if product.image %}
         <img src="{{ product.image.url }}" alt="{{ product.name }}"/>
@@ -171,13 +113,23 @@
         <span class="no-img">👗</span>
       {% endif %}
     </div>
-
-    <!-- INFO -->
     <div class="product-info">
       <div class="product-category">{{ product.category.name }}</div>
       <h1 class="product-name">{{ product.name }}</h1>
 
-      <!-- PRICE -->
+      <!-- RATING PREVIEW -->
+      {% if avg_rating %}
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:18px;">
+            {% for i in "12345" %}
+              {% if forloop.counter <= avg_rating %}⭐{% else %}☆{% endif %}
+            {% endfor %}
+          </span>
+          <span style="font-size:14px; color:var(--accent); font-weight:600;">{{ avg_rating }}</span>
+          <span style="font-size:13px; color:var(--muted);">({{ reviews.count }} reviews)</span>
+        </div>
+      {% endif %}
+
       <div class="product-price">
         {% if product.discount_price %}
           <span class="price-final">₹{{ product.discount_price }}</span>
@@ -187,15 +139,10 @@
           <span class="price-final">₹{{ product.price }}</span>
         {% endif %}
       </div>
-
       <div class="divider"></div>
-
-      <!-- DESCRIPTION -->
       {% if product.description %}
         <p class="product-desc">{{ product.description }}</p>
       {% endif %}
-
-      <!-- STOCK -->
       <div class="stock-info">
         {% if product.stock > 10 %}
           <div class="stock-dot"></div>
@@ -209,52 +156,153 @@
           <span style="color:#f44336;">Out of Stock</span>
         {% endif %}
       </div>
-
       <div class="divider"></div>
-
-      <!-- QUANTITY -->
       <div class="qty-wrap">
         <span class="qty-label">Quantity:</span>
         <button class="qty-btn" onclick="changeQty(-1)">−</button>
         <div class="qty-display" id="qty">1</div>
         <button class="qty-btn" onclick="changeQty(1)">+</button>
       </div>
-
-      <!-- BUTTONS -->
       <div class="btn-group">
         <a href="/wear/cart/add/{{ product.pk }}/" class="btn-primary">🛒 Add to Cart</a>
         <button class="btn-secondary">♡ Wishlist</button>
       </div>
-
     </div>
   </div>
 
   <!-- RELATED PRODUCTS -->
   {% if related %}
-  <div class="related-section">
-    <h2>You may also <span>like</span></h2>
-    <div class="related-grid">
-      {% for p in related %}
-        <a class="rel-card" href="/wear/products/{{ p.pk }}/">
-          <div class="rel-img">
-            {% if p.image %}
-              <img src="{{ p.image.url }}" alt="{{ p.name }}"/>
-            {% else %}
-              👗
-            {% endif %}
-          </div>
-          <div class="rel-body">
-            <div class="rel-name">{{ p.name }}</div>
-            <div class="rel-price">
-              {% if p.discount_price %}₹{{ p.discount_price }}{% else %}₹{{ p.price }}{% endif %}
+    <div class="related-section" style="margin-bottom:60px;">
+      <h2>You may also <span>like</span></h2>
+      <div class="related-grid">
+        {% for p in related %}
+          <a class="rel-card" href="/wear/products/{{ p.pk }}/">
+            <div class="rel-img">
+              {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}"/>{% else %}👗{% endif %}
             </div>
-          </div>
-        </a>
-      {% endfor %}
+            <div class="rel-body">
+              <div class="rel-name">{{ p.name }}</div>
+              <div class="rel-price">{% if p.discount_price %}₹{{ p.discount_price }}{% else %}₹{{ p.price }}{% endif %}</div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
     </div>
-  </div>
   {% endif %}
 
+  <!-- REVIEWS SECTION -->
+  <div style="margin-top:20px;">
+
+    <!-- RATING SUMMARY -->
+    <div style="display:flex; align-items:center; gap:40px; background:var(--surface);
+                border-radius:16px; border:1px solid var(--border); padding:32px;
+                margin-bottom:32px; flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:64px; font-weight:900;
+                    color:var(--accent); line-height:1;">{{ avg_rating }}</div>
+        <div style="font-size:24px; margin:8px 0;">
+          {% for i in "12345" %}
+            {% if forloop.counter <= avg_rating %}⭐{% else %}☆{% endif %}
+          {% endfor %}
+        </div>
+        <div style="font-size:13px; color:var(--muted);">{{ reviews.count }} reviews</div>
+      </div>
+      <div style="flex:1; min-width:200px;">
+        <p style="color:var(--muted); font-size:14px;">
+          {% if reviews.count == 0 %}Abhi koi review nahi — pehle review likho!
+          {% else %}Customer reviews{% endif %}
+        </p>
+      </div>
+    </div>
+
+    <!-- WRITE REVIEW -->
+    {% if user.is_authenticated and not user_reviewed %}
+      <div style="background:var(--surface); border-radius:16px; border:1px solid var(--border);
+                  padding:28px; margin-bottom:32px;">
+        <h3 style="font-size:18px; font-weight:600; margin-bottom:20px;">✍️ Write a Review</h3>
+        <form method="POST">
+          {% csrf_token %}
+          <div style="margin-bottom:20px;">
+            <label style="font-size:13px; color:var(--muted); display:block; margin-bottom:10px;">Your Rating</label>
+            <div style="display:flex; gap:8px;">
+              {% for i in "12345" %}
+                <label style="cursor:pointer; font-size:32px;">
+                  <input type="radio" name="rating" value="{{ forloop.counter }}" style="display:none;"
+                    {% if forloop.counter == 5 %}checked{% endif %}/>
+                  ⭐
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="font-size:13px; color:var(--muted); display:block; margin-bottom:8px;">Your Review</label>
+            <textarea name="comment" rows="4" placeholder="Product ke baare mein likho..." required
+              style="width:100%; padding:14px 16px; border-radius:10px;
+                     background:var(--surface2); border:1px solid var(--border);
+                     color:var(--text); font-size:14px; font-family:'DM Sans',sans-serif;
+                     outline:none; resize:vertical;"
+              onfocus="this.style.borderColor='var(--accent)'"
+              onblur="this.style.borderColor='var(--border)'"></textarea>
+          </div>
+          <button type="submit"
+            style="padding:13px 28px; border-radius:10px; background:var(--accent);
+                   color:#0d0d0d; border:none; font-size:14px; font-weight:600;
+                   cursor:pointer; font-family:'DM Sans',sans-serif;">
+            Submit Review ⭐
+          </button>
+        </form>
+      </div>
+    {% elif user_reviewed %}
+      <div style="background:rgba(200,169,110,0.06); border:1px solid var(--border);
+                  border-radius:12px; padding:16px 20px; margin-bottom:32px;
+                  color:var(--accent); font-size:14px;">
+        ✅ Tumne is product ka review de diya hai!
+      </div>
+    {% else %}
+      <div style="background:var(--surface); border-radius:12px; border:1px solid var(--border);
+                  padding:20px; margin-bottom:32px; text-align:center;">
+        <a href="/core/login/" style="color:var(--accent); font-size:14px; text-decoration:none;">
+          🔐 Login karo review likhne ke liye
+        </a>
+      </div>
+    {% endif %}
+
+    <!-- REVIEWS LIST -->
+    <h2 style="font-family:'Playfair Display',serif; font-size:26px; margin-bottom:20px;">
+      Customer <span style="color:var(--accent);">Reviews</span>
+    </h2>
+    {% if reviews %}
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        {% for review in reviews %}
+          <div style="background:var(--surface); border-radius:14px; border:1px solid var(--border); padding:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:40px; height:40px; border-radius:50%; background:rgba(200,169,110,0.15);
+                            border:1px solid var(--border); display:flex; align-items:center;
+                            justify-content:center; font-size:16px;">👤</div>
+                <div>
+                  <div style="font-size:14px; font-weight:600;">{{ review.user.email }}</div>
+                  <div style="font-size:12px; color:var(--muted);">{{ review.created_at|date:"d M Y" }}</div>
+                </div>
+              </div>
+              <div style="font-size:18px;">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= review.rating %}⭐{% else %}☆{% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <p style="font-size:14px; color:var(--muted); line-height:1.7;">{{ review.comment }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="text-align:center; padding:40px; color:var(--muted);">
+        <div style="font-size:40px; margin-bottom:12px;">💬</div>
+        <p>Abhi koi review nahi — pehle review likho!</p>
+      </div>
+    {% endif %}
+
+  </div>
 </div>
 
 <script>

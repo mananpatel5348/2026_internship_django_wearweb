@@ -205,6 +205,7 @@
             <th>Items</th>
             <th>Total</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -223,8 +224,16 @@
                   {{ order.get_status_display }}
                 </span>
               </td>
-            </tr>
-          {% endfor %}
+                <td>
+                  <a href="/wear/order-tracking/{{ order.id }}/"
+                     style="padding:6px 14px; border-radius:6px; background:transparent;
+                            border:1px solid var(--accent); color:var(--accent);
+                            font-size:12px; text-decoration:none;">
+                    Track →
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
         </tbody>
       </table>
 

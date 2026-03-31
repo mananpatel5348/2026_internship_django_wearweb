@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Order #{{ order.id }} — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e;
+      --accent:#c8a96e; --accent2:#e8c98e;
+      --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2);
+    }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:18px 48px; border-bottom:1px solid var(--border);
+      backdrop-filter:blur(20px); background:rgba(13,13,13,0.85);
+    }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.25s; font-weight:500; text-decoration:none; display:inline-block; background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .nav-btn:hover { color:var(--text); border-color:var(--accent); }
+
+    .page { padding:100px 24px 60px; max-width:680px; margin:0 auto; }
+
+    .page-title { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; margin-bottom:6px; }
+    .page-title span { color:var(--accent); }
+    .order-meta { color:var(--muted); font-size:14px; margin-bottom:40px; }
+
+    /* ORDER INFO CARD */
+    .info-card {
+      background:var(--surface); border-radius:16px;
+      border:1px solid var(--border); padding:24px;
+      margin-bottom:28px;
+    }
+    .info-card h3 { font-size:16px; font-weight:600; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .info-row { display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; }
+    .info-row .label { color:var(--muted); }
+    .info-row .value { font-weight:500; }
+    .info-row .value.accent { color:var(--accent); }
+
+    /* TRACKING STEPS */
+    .tracking-card {
+      background:var(--surface); border-radius:16px;
+      border:1px solid var(--border); padding:32px;
+      margin-bottom:28px;
+    }
+    .tracking-card h3 { font-size:16px; font-weight:600; margin-bottom:28px; }
+
+    .steps { position:relative; }
+    .step {
+      display:flex; gap:20px; align-items:flex-start;
+      margin-bottom:0; position:relative;
+    }
+    .step:not(:last-child)::after {
+      content:''; position:absolute;
+      left:19px; top:40px;
+      width:2px; height:100%;
+      background:var(--border);
+    }
+    .step.completed:not(:last-child)::after { background:var(--accent); }
+
+    .step-icon-wrap {
+      width:40px; height:40px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; flex-shrink:0; z-index:1;
+      border:2px solid var(--border);
+      background:var(--surface2);
+    }
+    .step.completed .step-icon-wrap {
+      background:rgba(200,169,110,0.15);
+      border-color:var(--accent);
+    }
+    .step.active .step-icon-wrap {
+      background:var(--accent);
+      border-color:var(--accent);
+      box-shadow:0 0 0 6px rgba(200,169,110,0.15);
+    }
+
+    .step-content { padding-bottom:32px; flex:1; }
+    .step-title { font-size:15px; font-weight:600; margin-bottom:4px; }
+    .step.completed .step-title { color:var(--accent); }
+    .step.active .step-title { color:var(--text); }
+    .step.inactive .step-title { color:var(--muted); }
+    .step-desc { font-size:13px; color:var(--muted); line-height:1.5; }
+    .step-time { font-size:12px; color:var(--accent); margin-top:4px; }
+
+    /* ITEMS */
+    .items-card {
+      background:var(--surface); border-radius:16px;
+      border:1px solid var(--border); padding:24px;
+      margin-bottom:28px;
+    }
+    .items-card h3 { font-size:16px; font-weight:600; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .order-item { display:flex; gap:14px; align-items:center; margin-bottom:14px; }
+    .order-item:last-child { margin-bottom:0; }
+    .item-img { width:60px; height:60px; border-radius:10px; overflow:hidden; background:var(--surface2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:24px; }
+    .item-img img { width:100%; height:100%; object-fit:cover; }
+    .item-info { flex:1; }
+    .item-name { font-size:14px; font-weight:500; margin-bottom:3px; }
+    .item-qty { font-size:12px; color:var(--muted); }
+    .item-price { font-size:15px; color:var(--accent); font-weight:600; }
+
+    /* BACK BTN */
+    .back-btn {
+      display:inline-block; padding:13px 28px; border-radius:10px;
+      background:var(--accent); color:#0d0d0d;
+      text-decoration:none; font-weight:600; font-size:14px;
+      transition:all 0.2s;
+    }
+    .back-btn:hover { background:var(--accent2); }
+
+    @media(max-width:600px) {
+      nav { padding:16px 20px; }
+      .page { padding:90px 16px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+  <a href="/wear/customer/" class="nav-btn">← My Orders</a>
+</nav>
+
+<div class="page">
+
+  <h1 class="page-title">Track <span>Order</span></h1>
+  <p class="order-meta">Order #{{ order.id }} &nbsp;·&nbsp; Placed on {{ order.created_at|date:"d M Y" }}</p>
+
+  <!-- ORDER INFO -->
+  <div class="info-card">
+    <h3>📋 Order Info</h3>
+    <div class="info-row">
+      <span class="label">Order ID</span>
+      <span class="value">#{{ order.id }}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Order Date</span>
+      <span class="value">{{ order.created_at|date:"d M Y, h:i A" }}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Total Amount</span>
+      <span class="value accent">₹{{ order.total_amount }}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Current Status</span>
+      <span class="value accent">{{ order.get_status_display }}</span>
+    </div>
+  </div>
+
+  <!-- TRACKING STEPS -->
+  <div class="tracking-card">
+    <h3>🚚 Delivery Tracking</h3>
+    <div class="steps">
+
+      <!-- Step 1: Order Placed -->
+      <div class="step completed">
+        <div class="step-icon-wrap">✓</div>
+        <div class="step-content">
+          <div class="step-title">Order Placed</div>
+          <div class="step-desc">Tumhara order successfully place ho gaya hai.</div>
+          <div class="step-time">{{ order.created_at|date:"d M Y, h:i A" }}</div>
+        </div>
+      </div>
+
+      <!-- Step 2: Confirmed -->
+      <div class="step {% if order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}completed{% elif order.status == 'pending' %}active{% else %}inactive{% endif %}">
+        <div class="step-icon-wrap">
+          {% if order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}✓
+          {% else %}📋{% endif %}
+        </div>
+        <div class="step-content">
+          <div class="step-title">Order Confirmed</div>
+          <div class="step-desc">Seller ne tumhara order confirm kar liya hai.</div>
+          {% if order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}
+            <div class="step-time">Confirmed ✓</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Step 3: Shipped -->
+      <div class="step {% if order.status == 'shipped' or order.status == 'delivered' %}completed{% elif order.status == 'confirmed' %}active{% else %}inactive{% endif %}">
+        <div class="step-icon-wrap">
+          {% if order.status == 'shipped' or order.status == 'delivered' %}✓
+          {% elif order.status == 'confirmed' %}🚚
+          {% else %}🚚{% endif %}
+        </div>
+        <div class="step-content">
+          <div class="step-title">Shipped</div>
+          <div class="step-desc">Tumhara order dispatch ho gaya hai aur raaste mein hai.</div>
+          {% if order.status == 'shipped' or order.status == 'delivered' %}
+            <div class="step-time">Shipped ✓</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Step 4: Out for Delivery -->
+      <div class="step {% if order.status == 'delivered' %}completed{% elif order.status == 'shipped' %}active{% else %}inactive{% endif %}">
+        <div class="step-icon-wrap">
+          {% if order.status == 'delivered' %}✓
+          {% else %}🛵{% endif %}
+        </div>
+        <div class="step-content">
+          <div class="step-title">Out for Delivery</div>
+          <div class="step-desc">Delivery boy tumhare paas aa raha hai!</div>
+          {% if order.status == 'delivered' %}
+            <div class="step-time">Delivered ✓</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Step 5: Delivered -->
+      <div class="step {% if order.status == 'delivered' %}completed{% else %}inactive{% endif %}">
+        <div class="step-icon-wrap">
+          {% if order.status == 'delivered' %}✓
+          {% else %}🎉{% endif %}
+        </div>
+        <div class="step-content">
+          <div class="step-title">Delivered</div>
+          <div class="step-desc">Order successfully deliver ho gaya!</div>
+          {% if order.status == 'delivered' %}
+            <div class="step-time">Delivered successfully! 🎉</div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORDER ITEMS -->
+  <div class="items-card">
+    <h3>🛍️ Ordered Items</h3>
+    {% for item in order.items.all %}
+      <div class="order-item">
+        <div class="item-img">
+          {% if item.product.image %}
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"/>
+          {% else %}👗{% endif %}
+        </div>
+        <div class="item-info">
+          <div class="item-name">{{ item.product.name }}</div>
+          <div class="item-qty">Quantity: {{ item.quantity }}</div>
+        </div>
+        <div class="item-price">₹{{ item.get_subtotal }}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <a href="/wear/customer/" class="back-btn">← Back to My Orders</a>
+
+</div>
+</body>
+</html>
