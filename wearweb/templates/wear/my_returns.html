@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Returns — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root { --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e; --accent:#c8a96e; --accent2:#e8c98e; --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2); }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; border-bottom:1px solid var(--border); backdrop-filter:blur(20px); background:rgba(13,13,13,0.85); }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; display:inline-block; background:transparent; color:var(--muted); border:1px solid var(--border); transition:all 0.2s; }
+    .nav-btn:hover { color:var(--text); border-color:var(--accent); }
+    .page { padding:100px 48px 60px; max-width:900px; margin:0 auto; }
+    .page-title { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; margin-bottom:32px; }
+    .page-title span { color:var(--accent); }
+
+    .return-card { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:24px; margin-bottom:20px; transition:all 0.3s; }
+    .return-card:hover { border-color:var(--accent); }
+    .return-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px; }
+    .return-id { font-size:16px; font-weight:600; }
+    .return-date { font-size:13px; color:var(--muted); }
+
+    .status-badge { padding:5px 14px; border-radius:50px; font-size:12px; font-weight:600; }
+    .status-pending { background:rgba(255,152,0,0.15); color:#ff9800; }
+    .status-approved { background:rgba(76,175,80,0.15); color:#4caf50; }
+    .status-rejected { background:rgba(244,67,54,0.15); color:#f44336; }
+    .status-completed { background:rgba(33,150,243,0.15); color:#2196f3; }
+
+    .return-body { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .return-info-item .label { font-size:12px; color:var(--muted); margin-bottom:4px; }
+    .return-info-item .value { font-size:14px; font-weight:500; }
+    .return-desc { font-size:13px; color:var(--muted); line-height:1.6; padding-top:12px; border-top:1px solid var(--border); }
+
+    .empty { text-align:center; padding:80px 20px; color:var(--muted); }
+    .empty-icon { font-size:56px; margin-bottom:16px; }
+    .empty h3 { font-size:20px; color:var(--text); margin-bottom:8px; }
+    .shop-btn { display:inline-block; margin-top:20px; padding:12px 28px; border-radius:10px; background:var(--accent); color:#0d0d0d; text-decoration:none; font-weight:600; font-size:14px; }
+
+    @media(max-width:600px) { nav { padding:16px 20px; } .page { padding:90px 20px 40px; } .return-body { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+  <a href="/wear/customer/" class="nav-btn">← My Orders</a>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">My <span>Returns</span></h1>
+
+  {% if returns %}
+    {% for ret in returns %}
+      <div class="return-card">
+        <div class="return-header">
+          <div>
+            <div class="return-id">Return #{{ ret.id }} — Order #{{ ret.order.id }}</div>
+            <div class="return-date">{{ ret.created_at|date:"d M Y, h:i A" }}</div>
+          </div>
+          <span class="status-badge status-{{ ret.status }}">
+            {{ ret.get_status_display }}
+          </span>
+        </div>
+        <div class="return-body">
+          <div class="return-info-item">
+            <div class="label">Reason</div>
+            <div class="value">{{ ret.get_reason_display }}</div>
+          </div>
+          <div class="return-info-item">
+            <div class="label">Order Amount</div>
+            <div class="value" style="color:var(--accent);">₹{{ ret.order.total_amount }}</div>
+          </div>
+        </div>
+        <div class="return-desc">{{ ret.description }}</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty">
+      <div class="empty-icon">📦</div>
+      <h3>Koi return request nahi!</h3>
+      <p>Abhi tak koi return request submit nahi ki</p>
+      <a href="/wear/customer/" class="shop-btn">My Orders →</a>
+    </div>
+  {% endif %}
+</div>
+</body>
+</html>

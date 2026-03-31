@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import role_required
-from .models import Product, Category, Cart, CartItem, Order, OrderItem, Address, Review
+from .models import Product, Category, Cart, CartItem, Order, OrderItem, Address, Review, ReturnRequest
 
 
 @role_required(allowd_roles=['customer'])
@@ -309,3 +309,38 @@ def order_success_view(request, pk):
 def order_tracking(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
     return render(request, 'wear/order_tracking.html', {'order': order})
+
+@login_required(login_url='/core/login/')
+def return_request_view(request, order_pk):
+    order = get_object_or_404(Order, pk=order_pk, user=request.user)
+
+    # Sirf delivered orders pe return allowed
+    if order.status != 'delivered':
+        messages.error(request, 'Sirf delivered orders pe return request kar sakte ho!')
+        return redirect('order_tracking', pk=order_pk)
+
+    # Check already requested
+    already_requested = ReturnRequest.objects.filter(order=order, user=request.user).exists()
+    if already_requested:
+        messages.error(request, 'Is order ke liye pehle se return request hai!')
+        return redirect('order_tracking', pk=order_pk)
+
+    if request.method == 'POST':
+        reason = request.POST.get('reason')
+        description = request.POST.get('description')
+        ReturnRequest.objects.create(
+            order=order,
+            user=request.user,
+            reason=reason,
+            description=description,
+        )
+        messages.success(request, 'Return request successfully submit ho gayi!')
+        return redirect('my_returns')
+
+    return render(request, 'wear/return_request.html', {'order': order})
+
+
+@login_required(login_url='/core/login/')
+def my_returns_view(request):
+    returns = ReturnRequest.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'wear/my_returns.html', {'returns': returns})

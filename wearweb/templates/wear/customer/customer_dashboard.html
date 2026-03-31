@@ -63,7 +63,7 @@
     .menu-item:hover { background:var(--surface2); color:var(--text); }
     .menu-item.active { background:rgba(200,169,110,0.1); color:var(--accent); border:1px solid var(--border); }
     .menu-icon { font-size:16px; width:20px; }
-
+  
     /* MAIN */
     .main { padding:40px 48px; }
 
@@ -245,6 +245,15 @@
         <a href="/wear/products/" class="shop-btn">Shop Now →</a>
       </div>
     {% endif %}
+
+    {% if order.status == 'delivered' %}
+  <a href="/wear/return/{{ order.id }}/"
+     style="padding:6px 14px; border-radius:6px; background:transparent;
+            border:1px solid rgba(244,67,54,0.4); color:#f44336;
+            font-size:12px; text-decoration:none; margin-left:6px;">
+    Return
+  </a>
+{% endif %}
 
   </div>
 </div>
