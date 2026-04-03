@@ -2,231 +2,470 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WEAR WEB — Home</title>
+  <title>WearWeb — Fashion Redefined</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --bg: #0d0d0d;
-      --surface: #161616;
-      --surface2: #1e1e1e;
-      --accent: #c8a96e;
-      --accent2: #e8c98e;
-      --text: #f5f0e8;
-      --muted: #888;
-      --border: rgba(200,169,110,0.2);
+      --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e;
+      --accent:#c8a96e; --accent2:#e8c98e;
+      --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2);
     }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* BACKGROUND */
-    .bg-art {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(200,169,110,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,169,110,0.05) 0%, transparent 70%);
-    }
-    .bg-art::after {
-      content:'';
-      position:absolute; inset:0;
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a96e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
 
     /* NAVBAR */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px;
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      background: rgba(13,13,13,0.85);
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 48px;
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(20px);
+      background:rgba(13,13,13,0.92);
     }
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px; font-weight: 900; letter-spacing: -0.5px;
-      color: var(--text); text-decoration: none;
-    }
-    .logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 8px; align-items: center; }
-    .nav-btn {
-      padding: 9px 22px; border-radius: 6px; font-size: 14px;
-      font-family: 'DM Sans', sans-serif; cursor: pointer;
-      transition: all 0.25s; font-weight: 500;
-      text-decoration: none; display: inline-block;
-    }
-    .nav-btn.ghost {
-      background: transparent; color: var(--muted);
-      border: 1px solid var(--border);
-    }
-    .nav-btn.ghost:hover { color: var(--text); border-color: var(--accent); }
-    .nav-btn.solid {
-      background: var(--accent); color: #0d0d0d; border: none;
-    }
-    .nav-btn.solid:hover { background: var(--accent2); }
-    .nav-btn.admin-btn {
-      background: transparent; color: var(--accent);
-      border: 1px solid var(--accent);
-    }
-    .nav-btn.admin-btn:hover { background: rgba(200,169,110,0.1); }
+    .logo { font-family:'Playfair Display',serif; font-size:24px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-center { display:flex; gap:28px; }
+    .nav-link { color:var(--muted); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; position:relative; }
+    .nav-link:hover { color:var(--accent); }
+    .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--accent); transition:width 0.2s; }
+    .nav-link:hover::after { width:100%; }
+    .nav-right { display:flex; gap:10px; align-items:center; }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.25s; font-weight:500; text-decoration:none; display:inline-block; }
+    .nav-btn.ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .nav-btn.ghost:hover { color:var(--text); border-color:var(--accent); }
+    .nav-btn.solid { background:var(--accent); color:#0d0d0d; border:none; }
+    .nav-btn.solid:hover { background:var(--accent2); }
 
-    /* HERO */
-    .hero {
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      min-height: 100vh;
-      padding: 120px 24px 80px;
-    }
+    /* HERO SLIDER */
+    .hero-slider { position:relative; height:100vh; overflow:hidden; }
+    .slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease; display:flex; align-items:center; justify-content:center; }
+    .slide.active { opacity:1; }
+    .slide-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+    .slide-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to right, rgba(13,13,13,0.85) 40%, rgba(13,13,13,0.2)); }
+    .slide-content { position:relative; z-index:1; max-width:600px; padding:0 48px; }
+    .slide-tag { display:inline-flex; align-items:center; gap:8px; padding:6px 16px; border-radius:50px; border:1px solid var(--border); background:rgba(200,169,110,0.1); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:20px; }
+    .slide-title { font-family:'Playfair Display',serif; font-size:clamp(40px,6vw,72px); font-weight:900; line-height:1.1; margin-bottom:16px; }
+    .slide-title em { color:var(--accent); font-style:italic; }
+    .slide-desc { font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:32px; max-width:440px; }
+    .slide-btns { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-hero-primary { padding:15px 36px; border-radius:8px; background:var(--accent); color:#0d0d0d; font-size:15px; font-weight:600; text-decoration:none; transition:all 0.2s; display:inline-block; }
+    .btn-hero-primary:hover { background:var(--accent2); transform:translateY(-2px); }
+    .btn-hero-secondary { padding:15px 36px; border-radius:8px; background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.3); font-size:15px; text-decoration:none; transition:all 0.2s; display:inline-block; }
+    .btn-hero-secondary:hover { border-color:var(--accent); color:var(--accent); }
 
-    .welcome-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 16px; border-radius: 50px;
-      border: 1px solid var(--border);
-      background: rgba(200,169,110,0.06);
-      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 32px;
-      animation: fadeUp 0.8s ease both;
-    }
-    .welcome-tag::before {
-      content:''; width:6px; height:6px; border-radius:50%;
-      background: var(--accent); animation: pulse 2s infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    /* SLIDER CONTROLS */
+    .slider-dots { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10; }
+    .dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.3); cursor:pointer; transition:all 0.3s; }
+    .dot.active { background:var(--accent); width:24px; border-radius:4px; }
+    .slider-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:10; width:48px; height:48px; border-radius:50%; background:rgba(13,13,13,0.6); border:1px solid var(--border); color:var(--text); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+    .slider-arrow:hover { background:var(--accent); color:#0d0d0d; border-color:var(--accent); }
+    .slider-prev { left:24px; }
+    .slider-next { right:24px; }
 
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(52px, 8vw, 96px);
-      font-weight: 900; line-height: 1.0;
-      letter-spacing: -2px;
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
-    .hero-title em { font-style: italic; color: var(--accent); }
+    /* SECTIONS */
+    .section { padding:80px 48px; max-width:1300px; margin:0 auto; }
+    .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
+    .section-title { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; }
+    .section-title span { color:var(--accent); }
+    .view-all { color:var(--accent); text-decoration:none; font-size:14px; font-weight:500; border-bottom:1px solid var(--accent); padding-bottom:2px; transition:opacity 0.2s; }
+    .view-all:hover { opacity:0.7; }
 
-    .hero-sub {
-      margin: 24px auto 0; max-width: 480px;
-      font-size: 17px; color: var(--muted); line-height: 1.7;
-      font-weight: 300;
-      animation: fadeUp 0.8s 0.2s ease both;
+    /* OFFER BANNER */
+    .offer-banner {
+      background:linear-gradient(135deg, #1a1200 0%, #2a1e00 50%, #1a1200 100%);
+      border:1px solid var(--border); margin:0 48px;
+      border-radius:20px; padding:40px 48px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:20px;
     }
+    .offer-left .offer-tag { font-size:12px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:8px; }
+    .offer-left h2 { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; margin-bottom:8px; }
+    .offer-left p { color:var(--muted); font-size:15px; }
+    .offer-timer { display:flex; gap:16px; }
+    .timer-box { text-align:center; background:rgba(200,169,110,0.1); border:1px solid var(--border); border-radius:12px; padding:16px 20px; min-width:70px; }
+    .timer-num { font-family:'Playfair Display',serif; font-size:28px; font-weight:900; color:var(--accent); }
+    .timer-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    .offer-btn { padding:14px 32px; border-radius:10px; background:var(--accent); color:#0d0d0d; font-size:15px; font-weight:700; text-decoration:none; transition:all 0.2s; white-space:nowrap; display:inline-block; }
+    .offer-btn:hover { background:var(--accent2); transform:translateY(-2px); }
 
-    .hero-ctas {
-      margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap;
-      justify-content: center;
-      animation: fadeUp 0.8s 0.3s ease both;
-    }
-    .cta-btn {
-      padding: 15px 36px; border-radius: 8px; font-size: 15px;
-      font-weight: 500; cursor: pointer; transition: all 0.25s;
-      font-family: 'DM Sans', sans-serif;
-      text-decoration: none; display: inline-block;
-    }
-    .cta-primary { background: var(--accent); color: #0d0d0d; border: none; }
-    .cta-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,169,110,0.3); }
-    .cta-secondary {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .cta-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    /* CATEGORIES */
+    .cat-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:16px; }
+    .cat-card { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:28px 20px; text-align:center; text-decoration:none; color:var(--text); transition:all 0.3s; cursor:pointer; display:block; }
+    .cat-card:hover { border-color:var(--accent); transform:translateY(-4px); background:rgba(200,169,110,0.05); }
+    .cat-icon { font-size:36px; margin-bottom:12px; }
+    .cat-name { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .cat-count { font-size:12px; color:var(--muted); }
+
+    /* PRODUCTS */
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:24px; }
+    .product-card { background:var(--surface); border-radius:16px; border:1px solid var(--border); overflow:hidden; transition:all 0.3s; text-decoration:none; color:var(--text); display:block; position:relative; }
+    .product-card:hover { border-color:var(--accent); transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+    .product-img { height:280px; overflow:hidden; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:48px; position:relative; }
+    .product-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+    .product-card:hover .product-img img { transform:scale(1.05); }
+    .product-badge { position:absolute; top:12px; left:12px; padding:4px 10px; border-radius:50px; font-size:11px; font-weight:600; }
+    .badge-new { background:var(--accent); color:#0d0d0d; }
+    .badge-sale { background:#f44336; color:#fff; }
+    .product-body { padding:16px; }
+    .product-cat { font-size:11px; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+    .product-name { font-size:15px; font-weight:500; margin-bottom:10px; }
+    .product-price { display:flex; align-items:center; gap:8px; }
+    .price-now { font-size:18px; font-weight:700; color:var(--accent); }
+    .price-old { font-size:13px; color:var(--muted); text-decoration:line-through; }
+    .price-off { font-size:11px; padding:2px 8px; border-radius:50px; background:rgba(244,67,54,0.15); color:#f44336; }
+
+    /* MARQUEE */
+    .marquee-wrap { background:var(--accent); padding:14px 0; overflow:hidden; }
+    .marquee-track { display:flex; gap:0; animation:marquee 20s linear infinite; white-space:nowrap; }
+    .marquee-item { padding:0 32px; font-size:13px; font-weight:600; color:#0d0d0d; letter-spacing:1px; }
+    .marquee-dot { color:#0d0d0d; opacity:0.4; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
     /* FEATURES */
-    .features {
-      position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 0 48px 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-      animation: fadeUp 0.8s 0.4s ease both;
-    }
-    .feat-card {
-      padding: 28px; border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      text-align: left; transition: all 0.3s;
-    }
-    .feat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-    .feat-icon { font-size: 28px; margin-bottom: 14px; }
-    .feat-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-    .feat-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+    .feat-card { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:28px; transition:all 0.3s; }
+    .feat-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+    .feat-icon { font-size:32px; margin-bottom:14px; }
+    .feat-title { font-size:16px; font-weight:600; margin-bottom:8px; }
+    .feat-desc { font-size:13px; color:var(--muted); line-height:1.6; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    /* FOOTER */
+    footer { background:var(--surface); border-top:1px solid var(--border); padding:60px 48px 32px; margin-top:80px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
+    .footer-brand .logo { font-size:26px; display:block; margin-bottom:16px; }
+    .footer-brand p { font-size:14px; color:var(--muted); line-height:1.7; max-width:280px; }
+    .footer-col h4 { font-size:14px; font-weight:600; margin-bottom:16px; color:var(--text); letter-spacing:0.5px; }
+    .footer-link { display:block; color:var(--muted); text-decoration:none; font-size:13px; margin-bottom:10px; transition:color 0.2s; }
+    .footer-link:hover { color:var(--accent); }
+    .footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:24px; border-top:1px solid var(--border); font-size:13px; color:var(--muted); flex-wrap:wrap; gap:12px; }
 
-    @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
-      .logo { font-size: 20px; }
-      .nav-links { gap: 6px; }
-      .nav-btn { padding: 7px 14px; font-size: 12px; }
-      .features { padding: 0 20px 60px; }
+    @media(max-width:768px) {
+      nav { padding:14px 20px; }
+      .nav-center { display:none; }
+      .section { padding:60px 20px; }
+      .offer-banner { margin:0 20px; padding:28px 20px; }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+      .slider-arrow { display:none; }
     }
   </style>
 </head>
 <body>
 
-<div class="bg-art"></div>
-
 <!-- NAVBAR -->
 <nav>
   <a class="logo" href="/">Wear<span>Web</span></a>
- <div class="nav-links">
+  <div class="nav-center">
+    <a href="/wear/products/" class="nav-link">Shop</a>
+    <a href="/wear/products/?category=mens-clothing" class="nav-link">Men</a>
+    <a href="/wear/products/?category=womens-clothing" class="nav-link">Women</a>
+    <a href="/wear/delivery-info/" class="nav-link">Delivery</a>
+    <a href="/wear/return-policy/" class="nav-link">Returns</a>
+  </div>
+  <div class="nav-right">
     {% if user.is_authenticated %}
-      <span style="color: var(--accent); font-size: 14px; padding: 9px 12px;">👤 {{ user.username }}</span>
-      <a href="/core/logout/" class="nav-btn admin-btn">Logout</a>
+      {% if user.role == 'customer' %}
+        <a href="/wear/customer/" class="nav-btn ghost">👤 Dashboard</a>
+      {% elif user.role == 'seller' %}
+        <a href="/wear/seller/" class="nav-btn ghost">🏪 Dashboard</a>
+      {% elif user.role == 'admin' %}
+        <a href="/wear/admin/" class="nav-btn ghost">👑 Dashboard</a>
+      {% endif %}
+      <a href="/wear/cart/" class="nav-btn ghost">🛒 Cart</a>
+      <a href="/core/logout/" class="nav-btn ghost">Logout</a>
     {% else %}
       <a href="/core/login/" class="nav-btn ghost">Login</a>
       <a href="/core/signup/" class="nav-btn solid">Sign Up</a>
-      <a href="/admin/" class="nav-btn admin-btn">Admin ⚡</a>
     {% endif %}
   </div>
 </nav>
 
-<!-- HERO SECTION -->
-<section class="hero">
-  <div class="welcome-tag">✦ Fashion Redefined</div>
-  <h1 class="hero-title">Welcome to<br/><em>WearWeb</em></h1>
-  <p class="hero-sub">Discover curated fashion collections, effortless shopping, and style that speaks for itself. Your wardrobe, elevated.</p>
-  <div class="hero-ctas">
-    <a href="/core/signup/" class="cta-btn cta-primary">Get Started Free</a>
-    <a href="/core/login/" class="cta-btn cta-secondary">Already have an account?</a>
-  </div>
-</section>
+<!-- HERO SLIDER -->
+<div class="hero-slider" id="heroSlider">
 
-<!-- FEATURES -->
-<div class="features">
-  <div class="feat-card">
-    <div class="feat-icon">👗</div>
-    <div class="feat-title">Curated Collections</div>
-    <div class="feat-desc">Hand-picked styles updated every season for the modern wardrobe.</div>
+  <div class="slide active">
+    <div class="slide-bg" style="background-color:#0d0d0d; background-image:linear-gradient(135deg,#0d0d0d 0%,#1a1200 100%);"></div>
+    <div class="slide-content">
+      <div class="slide-tag">✦ New Collection 2026</div>
+      <h1 class="slide-title">Style That<br/><em>Speaks</em> For Itself</h1>
+      <p class="slide-desc">Discover premium fashion collections curated for the modern wardrobe. Elevate your style today.</p>
+      <div class="slide-btns">
+        <a href="/wear/products/" class="btn-hero-primary">Shop Now →</a>
+        <a href="/core/signup/" class="btn-hero-secondary">Join Free</a>
+      </div>
+    </div>
   </div>
-  <div class="feat-card">
-    <div class="feat-icon">🚀</div>
-    <div class="feat-title">Fast Delivery</div>
-    <div class="feat-desc">Lightning-fast shipping across India with real-time tracking.</div>
+
+  <div class="slide">
+    <div class="slide-bg" style="background-color:#0d0d0d; background-image:linear-gradient(135deg,#0d1a0d 0%,#001a00 100%);"></div>
+    <div class="slide-content">
+      <div class="slide-tag">🚀 Free Delivery</div>
+      <h1 class="slide-title">Free Shipping<br/>On Orders <em>₹499+</em></h1>
+      <p class="slide-desc">Pan India delivery with real-time tracking. Your order, delivered safely to your doorstep.</p>
+      <div class="slide-btns">
+        <a href="/wear/products/" class="btn-hero-primary">Shop Now →</a>
+        <a href="/wear/delivery-info/" class="btn-hero-secondary">Know More</a>
+      </div>
+    </div>
   </div>
-  <div class="feat-card">
-    <div class="feat-icon">🔒</div>
-    <div class="feat-title">Secure Payments</div>
-    <div class="feat-desc">UPI, cards, wallets — all secured with bank-grade encryption.</div>
+
+  <div class="slide">
+    <div class="slide-bg" style="background-color:#0d0d0d; background-image:linear-gradient(135deg,#1a000d 0%,#0d0d1a 100%);"></div>
+    <div class="slide-content">
+      <div class="slide-tag">↩️ Easy Returns</div>
+      <h1 class="slide-title">30-Day<br/><em>Hassle-Free</em> Returns</h1>
+      <p class="slide-desc">Not satisfied? Return within 30 days — no questions asked. 100% refund guaranteed.</p>
+      <div class="slide-btns">
+        <a href="/wear/products/" class="btn-hero-primary">Shop Now →</a>
+        <a href="/wear/return-policy/" class="btn-hero-secondary">Return Policy</a>
+      </div>
+    </div>
   </div>
-  <div class="feat-card">
-    <div class="feat-icon">↩️</div>
-    <div class="feat-title">Easy Returns</div>
-    <div class="feat-desc">30-day hassle-free return policy. No questions asked.</div>
+
+  <!-- ARROWS -->
+  <button class="slider-arrow slider-prev" onclick="changeSlide(-1)">‹</button>
+  <button class="slider-arrow slider-next" onclick="changeSlide(1)">›</button>
+
+  <!-- DOTS -->
+  <div class="slider-dots">
+    <div class="dot active" onclick="goToSlide(0)"></div>
+    <div class="dot" onclick="goToSlide(1)"></div>
+    <div class="dot" onclick="goToSlide(2)"></div>
   </div>
 </div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">FREE SHIPPING ON ₹499+</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">NEW ARRIVALS EVERY WEEK</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">30-DAY EASY RETURNS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">SECURE PAYMENTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">FREE SHIPPING ON ₹499+</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">NEW ARRIVALS EVERY WEEK</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">30-DAY EASY RETURNS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">SECURE PAYMENTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Shop by <span>Category</span></h2>
+    <a href="/wear/products/" class="view-all">View All →</a>
+  </div>
+  <div class="cat-grid">
+    <a href="/wear/products/?category=mens-clothing" class="cat-card">
+      <div class="cat-icon">👔</div>
+      <div class="cat-name">Men's Wear</div>
+      <div class="cat-count">Shirts, Pants & More</div>
+    </a>
+    <a href="/wear/products/?category=womens-clothing" class="cat-card">
+      <div class="cat-icon">👗</div>
+      <div class="cat-name">Women's Wear</div>
+      <div class="cat-count">Dresses, Tops & More</div>
+    </a>
+    <a href="/wear/products/?category=accessories" class="cat-card">
+      <div class="cat-icon">👜</div>
+      <div class="cat-name">Accessories</div>
+      <div class="cat-count">Bags, Belts & More</div>
+    </a>
+    <a href="/wear/products/?category=footwear" class="cat-card">
+      <div class="cat-icon">👟</div>
+      <div class="cat-name">Footwear</div>
+      <div class="cat-count">Shoes, Sandals & More</div>
+    </a>
+    <a href="/wear/products/?category=ethnic" class="cat-card">
+      <div class="cat-icon">🥻</div>
+      <div class="cat-name">Ethnic Wear</div>
+      <div class="cat-count">Kurta, Saree & More</div>
+    </a>
+    <a href="/wear/products/?category=sportswear" class="cat-card">
+      <div class="cat-icon">🏃</div>
+      <div class="cat-name">Sportswear</div>
+      <div class="cat-count">Gym, Sports & More</div>
+    </a>
+  </div>
+</div>
+
+<!-- OFFER BANNER -->
+<div class="offer-banner">
+  <div class="offer-left">
+    <div class="offer-tag">⚡ Limited Time Offer</div>
+    <h2>Flat 30% OFF<br/>On First Order!</h2>
+    <p>Use code: <strong style="color:var(--accent);">WEAR30</strong> at checkout</p>
+  </div>
+  <div class="offer-timer">
+    <div class="timer-box">
+      <div class="timer-num" id="hours">12</div>
+      <div class="timer-label">Hours</div>
+    </div>
+    <div class="timer-box">
+      <div class="timer-num" id="minutes">45</div>
+      <div class="timer-label">Mins</div>
+    </div>
+    <div class="timer-box">
+      <div class="timer-num" id="seconds">00</div>
+      <div class="timer-label">Secs</div>
+    </div>
+  </div>
+  <a href="/wear/products/" class="offer-btn">Grab Deal →</a>
+</div>
+
+<!-- NEW ARRIVALS -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">New <span>Arrivals</span></h2>
+    <a href="/wear/products/?sort=newest" class="view-all">View All →</a>
+  </div>
+  <div class="products-grid">
+    {% for product in products %}
+      <a class="product-card" href="/wear/products/{{ product.pk }}/">
+        <div class="product-img">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}"/>
+          {% else %}
+            👗
+          {% endif %}
+          {% if forloop.counter <= 2 %}
+            <span class="product-badge badge-new">NEW</span>
+          {% endif %}
+          {% if product.discount_price %}
+            <span class="product-badge badge-sale" style="top:44px;">SALE</span>
+          {% endif %}
+        </div>
+        <div class="product-body">
+          <div class="product-cat">{{ product.category.name }}</div>
+          <div class="product-name">{{ product.name }}</div>
+          <div class="product-price">
+            {% if product.discount_price %}
+              <span class="price-now">₹{{ product.discount_price }}</span>
+              <span class="price-old">₹{{ product.price }}</span>
+              <span class="price-off">{{ product.get_discount_percent }}% off</span>
+            {% else %}
+              <span class="price-now">₹{{ product.price }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+    {% empty %}
+      <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">
+        <p>Abhi koi products nahi hain — admin se add karo!</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Why Choose <span>WearWeb?</span></h2>
+  </div>
+  <div class="features-grid">
+    <a href="/wear/products/" class="feat-card" style="text-decoration:none; color:inherit;">
+      <div class="feat-icon">👗</div>
+      <div class="feat-title">Curated Collections</div>
+      <div class="feat-desc">Hand-picked styles updated every season for the modern wardrobe.</div>
+    </a>
+    <a href="/wear/delivery-info/" class="feat-card" style="text-decoration:none; color:inherit;">
+      <div class="feat-icon">🚀</div>
+      <div class="feat-title">Fast Delivery</div>
+      <div class="feat-desc">Lightning-fast shipping across India with real-time tracking.</div>
+    </a>
+    <a href="/wear/payment-info/" class="feat-card" style="text-decoration:none; color:inherit;">
+      <div class="feat-icon">🔒</div>
+      <div class="feat-title">Secure Payments</div>
+      <div class="feat-desc">UPI, cards, wallets — all secured with bank-grade encryption.</div>
+    </a>
+    <a href="/wear/return-policy/" class="feat-card" style="text-decoration:none; color:inherit;">
+      <div class="feat-icon">↩️</div>
+      <div class="feat-title">Easy Returns</div>
+      <div class="feat-desc">30-day hassle-free return policy. No questions asked.</div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="/">Wear<span>Web</span></a>
+      <p>Your premium fashion destination. Discover curated collections, effortless shopping, and style that speaks for itself.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="/wear/products/" class="footer-link">All Products</a>
+      <a href="/wear/products/?sort=newest" class="footer-link">New Arrivals</a>
+      <a href="/wear/products/?category=mens-clothing" class="footer-link">Men's Wear</a>
+      <a href="/wear/products/?category=womens-clothing" class="footer-link">Women's Wear</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="/wear/delivery-info/" class="footer-link">Delivery Info</a>
+      <a href="/wear/return-policy/" class="footer-link">Return Policy</a>
+      <a href="/wear/payment-info/" class="footer-link">Payment Info</a>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      {% if user.is_authenticated %}
+        <a href="/wear/customer/" class="footer-link">My Dashboard</a>
+        <a href="/wear/cart/" class="footer-link">My Cart</a>
+        <a href="/wear/my-returns/" class="footer-link">My Returns</a>
+        <a href="/core/logout/" class="footer-link">Logout</a>
+      {% else %}
+        <a href="/core/login/" class="footer-link">Login</a>
+        <a href="/core/signup/" class="footer-link">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 WearWeb. All rights reserved.</span>
+    <span>Made with ❤️ in India</span>
+  </div>
+</footer>
+
+<script>
+  // HERO SLIDER
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function goToSlide(n) {
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }
+
+  function changeSlide(dir) { goToSlide(currentSlide + dir); }
+  setInterval(() => changeSlide(1), 5000);
+
+  // COUNTDOWN TIMER
+  function startTimer() {
+    let total = 12 * 3600 + 45 * 60;
+    setInterval(() => {
+      total--;
+      if (total < 0) total = 12 * 3600;
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+      document.getElementById('hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('minutes').textContent = String(m).padStart(2,'0');
+      document.getElementById('seconds').textContent = String(s).padStart(2,'0');
+    }, 1000);
+  }
+  startTimer();
+</script>
 
 </body>
 </html>

@@ -344,3 +344,12 @@ def return_request_view(request, order_pk):
 def my_returns_view(request):
     returns = ReturnRequest.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'wear/my_returns.html', {'returns': returns})
+
+def delivery_info(request):
+    return render(request, 'wear/delivery_info.html')
+
+def payment_info(request):
+    return render(request, 'wear/payment_info.html')
+
+def return_policy(request):
+    return render(request, 'wear/return_policy.html')

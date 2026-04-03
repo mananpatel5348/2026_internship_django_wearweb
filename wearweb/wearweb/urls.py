@@ -21,9 +21,12 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 from django.conf.urls.static import static
+from wear.models import Product
 
 def home(request):
-    return render(request, 'core/home.html') 
+    products = Product.objects.filter(is_available=True).order_by('-id')[:8]
+    return render(request, 'core/home.html', {'products': products})
+
 
 urlpatterns = [
     path('', home),                              # 127.0.0.1:8000 → Welcome

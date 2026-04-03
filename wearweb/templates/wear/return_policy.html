@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Return Policy — WearWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root { --bg:#0d0d0d; --surface:#161616; --surface2:#1e1e1e; --accent:#c8a96e; --accent2:#e8c98e; --text:#f5f0e8; --muted:#888; --border:rgba(200,169,110,0.2); }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; border-bottom:1px solid var(--border); backdrop-filter:blur(20px); background:rgba(13,13,13,0.85); }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--text); text-decoration:none; }
+    .logo span { color:var(--accent); }
+    .nav-btn { padding:8px 20px; border-radius:6px; font-size:13px; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; display:inline-block; background:transparent; color:var(--muted); border:1px solid var(--border); transition:all 0.2s; }
+    .nav-btn:hover { color:var(--text); border-color:var(--accent); }
+    .page { padding:100px 48px 60px; max-width:800px; margin:0 auto; }
+    .hero { text-align:center; margin-bottom:60px; }
+    .hero-icon { font-size:72px; margin-bottom:20px; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:40px; font-weight:900; margin-bottom:12px; }
+    .hero h1 span { color:var(--accent); }
+    .hero p { color:var(--muted); font-size:16px; line-height:1.7; }
+    .highlight-box { background:rgba(200,169,110,0.06); border:1px solid var(--border); border-radius:16px; padding:28px; margin-bottom:28px; text-align:center; }
+    .highlight-number { font-family:'Playfair Display',serif; font-size:64px; font-weight:900; color:var(--accent); line-height:1; }
+    .highlight-text { font-size:16px; color:var(--muted); margin-top:8px; }
+    .section { background:var(--surface); border-radius:16px; border:1px solid var(--border); padding:32px; margin-bottom:24px; }
+    .section h2 { font-family:'Playfair Display',serif; font-size:22px; margin-bottom:20px; }
+    .section h2 span { color:var(--accent); }
+    .policy-item { display:flex; gap:14px; align-items:flex-start; margin-bottom:18px; }
+    .policy-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+    .policy-title { font-size:15px; font-weight:600; margin-bottom:4px; }
+    .policy-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+    .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:28px; }
+    .step-card { background:var(--surface); border-radius:14px; border:1px solid var(--border); padding:20px; text-align:center; }
+    .step-num { width:36px; height:36px; border-radius:50%; background:rgba(200,169,110,0.15); border:1px solid var(--accent); color:var(--accent); font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:14px; }
+    .step-title { font-size:13px; font-weight:600; margin-bottom:4px; }
+    .step-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+    .back-btn { display:inline-block; padding:13px 28px; border-radius:10px; background:var(--accent); color:#0d0d0d; text-decoration:none; font-weight:600; font-size:14px; transition:all 0.2s; }
+    .back-btn:hover { background:var(--accent2); }
+    @media(max-width:600px) { nav { padding:16px 20px; } .page { padding:90px 20px 40px; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="/">Wear<span>Web</span></a>
+  <a href="/" class="nav-btn">← Home</a>
+</nav>
+<div class="page">
+  <div class="hero">
+    <div class="hero-icon">↩️</div>
+    <h1>Easy <span>Returns</span></h1>
+    <p>No questions asked — hassle-free returns within 30 days.<br/>Tumhari satisfaction hamari priority hai.</p>
+  </div>
+
+  <div class="highlight-box">
+    <div class="highlight-number">30</div>
+    <div class="highlight-text">Din ki return policy — koi sawaal nahi!</div>
+  </div>
+
+  <h2 style="font-family:'Playfair Display',serif; font-size:22px; margin-bottom:16px;">
+    Return <span style="color:var(--accent);">Process</span>
+  </h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-title">Request Karo</div>
+      <div class="step-desc">Dashboard se return request submit karo</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-title">Approval</div>
+      <div class="step-desc">1-2 days mein request approve hogi</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-title">Pickup</div>
+      <div class="step-desc">Courier tumhare ghar se product pick karega</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-title">Refund</div>
+      <div class="step-desc">5-7 days mein refund mil jayega</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Return <span>Policy</span></h2>
+    <div class="policy-item">
+      <div class="policy-icon">✅</div>
+      <div>
+        <div class="policy-title">30 Din Ki Window</div>
+        <div class="policy-desc">Delivery ke 30 din ke andar return request kar sakte ho.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon">✅</div>
+      <div>
+        <div class="policy-title">Original Condition</div>
+        <div class="policy-desc">Product unworn, unwashed aur original packaging mein hona chahiye.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon">✅</div>
+      <div>
+        <div class="policy-title">Free Return Pickup</div>
+        <div class="policy-desc">Return shipping bilkul FREE hai — tumhe kuch nahi dena padega.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon">✅</div>
+      <div>
+        <div class="policy-title">Full Refund</div>
+        <div class="policy-desc">Original payment method pe poora refund milega.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon">❌</div>
+      <div>
+        <div class="policy-title">Sale Items</div>
+        <div class="policy-desc">Sale ya discounted items return nahi ho sakte.</div>
+      </div>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon">❌</div>
+      <div>
+        <div class="policy-title">Used Products</div>
+        <div class="policy-desc">Worn ya damaged products return nahi ho sakte.</div>
+      </div>
+    </div>
+  </div>
+
+  <a href="/wear/products/" class="back-btn">Shop Now →</a>
+</div>
+</body>
+</html>

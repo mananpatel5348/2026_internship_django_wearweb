@@ -20,4 +20,7 @@ urlpatterns = [
     path('payment/process/', views.process_payment, name='process_payment'),
     path('order-success/<int:pk>/', views.order_success_view, name='order_success'),
     path('order-tracking/<int:pk>/', views.order_tracking, name='order_tracking'),
+    path('delivery-info/', views.delivery_info, name='delivery_info'),
+    path('payment-info/', views.payment_info, name='payment_info'),
+    path('return-policy/', views.return_policy, name='return_policy'),
 ]

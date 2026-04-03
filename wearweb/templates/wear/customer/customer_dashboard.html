@@ -63,7 +63,7 @@
     .menu-item:hover { background:var(--surface2); color:var(--text); }
     .menu-item.active { background:rgba(200,169,110,0.1); color:var(--accent); border:1px solid var(--border); }
     .menu-icon { font-size:16px; width:20px; }
-  
+
     /* MAIN */
     .main { padding:40px 48px; }
 
@@ -158,6 +158,9 @@
         <span class="menu-icon">👗</span> Shop Now
       </a>
       <a href="/wear/cart/" class="menu-item">
+        <a href="/wear/my-returns/" class="menu-item">
+  <span class="menu-icon">↩️</span> My Returns
+</a>
         <span class="menu-icon">🛒</span> My Cart
       </a>
       <a href="/core/logout/" class="menu-item">
@@ -231,6 +234,14 @@
                             font-size:12px; text-decoration:none;">
                     Track →
                   </a>
+                  {% if order.status == 'delivered' %}
+                  <a href="/wear/return/{{ order.id }}/"
+                     style="padding:6px 14px; border-radius:6px; background:transparent;
+                            border:1px solid rgba(244,67,54,0.4); color:#f44336;
+                            font-size:12px; text-decoration:none; margin-left:6px;">
+                    Return
+                  </a>
+                  {% endif %}
                 </td>
               </tr>
             {% endfor %}
